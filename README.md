@@ -1,13 +1,19 @@
 # DataCook
-## Anti-adversarial fingerprints enable persistent copyright protection of healthcare data
+## Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control
 
-An official implementation of the paper _Anti-adversarial fingerprints enable persistent copyright protection of healthcare data_. 
+An official implementation of the paper _DataCook_. 
 
-**The paper is still underreview!** The open-access version of the paper can be downloaded from [Arxiv](https://arxiv.org/abs/2403.17755). **Feel free to clone our full project, test, and even make improvements on your own.** 
+**Accepted by Meta-Radiology, 2026!** The open-access version of the paper can be downloaded from [Arxiv](https://arxiv.org/abs/2403.17755). **Feel free to clone our full project, test, and even make improvements on your own.** 
 
-### Abstract
+### Overview
 <p align="justify">
-The growing adoption of data-driven healthcare AI raises a key question: how can we protect sensitive medical data without hindering its use? Existing methods like encryption and watermarking only act before data distribution and cannot control models trained on protected data. We introduce <b>DataCook</b>, a deployment-phase framework that embeds imperceptible anti-adversarial fingerprints into medical data. These fingerprints enhance model confidence for authorized inputs while degrading performance for unauthorized ones, ensuring persistent and fine-grained copyright protection. DataCook supports 2D/3D and high-resolution medical imaging as well as non-image modalities, enabling secure sharing without sacrificing model utility.
+DataCook explores deployment-stage healthcare data usage control using anti-adversarial fingerprints.
+
+The framework applies a private cooking procedure to healthcare data before distribution. Models trained on cooked data can preserve predictive utility when evaluated on similarly cooked inputs, while their performance on raw inputs may be reduced.
+
+We evaluate DataCook on 2D, 3D, and high-resolution medical images, as well as structured healthcare tabular data. The results demonstrate the feasibility of authorization-dependent model use in several settings, while highlighting important task- and metric-dependent limitations.
+
+DataCook is presented as a proof-of-concept framework rather than a universally effective mechanism for preventing unauthorized data use.
 </p>
 
 ![image](images/Overview.png)
@@ -134,6 +140,17 @@ Please refer to each `train.sh` or `search_perturbation_noise.sh` file for detai
 
 ## Citation
 If you use this code, please cite the following:
+
+@misc{shang2026datacook,
+  title = {DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control},
+  author = {Shang, Sihan and Yan, Jun and Shi, Danli and Zheng, Haizhong and Zheng, Shuangjia and Zhao, Wei and Yang, Jiancheng},
+  year = {2026},
+  eprint = {2403.17755},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.AI},
+  url = {https://arxiv.org/abs/2403.17755},
+  note = {Accepted for publication in Meta-Radiology}
+}
 
 > We adapted some codes from:
 > * [Unlearnable Examples](https://github.com/HanxunH/Unlearnable-Examples)
