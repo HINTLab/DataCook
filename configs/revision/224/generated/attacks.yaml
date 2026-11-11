@@ -1,0 +1,443 @@
+experiments:
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/BreastMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/BreastMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/BreastMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/PneumoniaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/PneumoniaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/PneumoniaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/PneumoniaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/RetinaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/RetinaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/RetinaMNIST/resnet18_224.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/protected/resnet18_224/checkpoints/resnet18_224.pth
+  eval_data:
+    inputs: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_224/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+output: results/revision_pipeline/posthoc/adaptive_attack_results_224.csv

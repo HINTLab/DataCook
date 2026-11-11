@@ -1,0 +1,4 @@
+experiments: []
+outputs:
+  samples: results/revision_pipeline_3d/posthoc/pseudo_label_samples.csv
+  quality: results/revision_pipeline_3d/posthoc/pseudo_label_quality.csv

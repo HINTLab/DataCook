@@ -1,0 +1,23 @@
+inputs:
+  cp_pp: ../../results/revision_pipeline_extra2d/summary/cp_pp_summary.csv
+  quality: ../../results/revision_pipeline/posthoc/quality_metrics_extra2d.csv
+  attacks: ../../results/revision_pipeline/posthoc/adaptive_attack_results_all_extra2d.csv
+  budget_attacks: ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_extra2d.csv
+  runtime: ../../results/revision_pipeline/posthoc/runtime_summary_extra2d.csv
+  pseudo: ../../results/revision_pipeline/posthoc/pseudo_label_quality_extra2d.csv
+
+full_subset_sizes:
+  PneumoniaMNIST: 524
+  DermaMNIST: 1003
+  OrganCMNIST: 2392
+
+significance:
+  metrics: [acc, macro_f1, auc, macro_auc]
+  epsilons_pixel_by_dataset:
+    PneumoniaMNIST: [8]
+    DermaMNIST: [8]
+    OrganCMNIST: [8]
+  attack_types: [finetune, robust_finetune]
+  epochs: [10]
+
+output_dir: results/revision_pipeline_extra2d/final_8seeds

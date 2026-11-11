@@ -1,7 +1,7 @@
-    """
-    Adapted from https://github.com/HanxunH/Unlearnable-Examples
-    Implements a trainer extended functionality.
-    """
+"""
+Adapted from https://github.com/HanxunH/Unlearnable-Examples.
+Implements extended trainer functionality.
+"""
 import time
 import models
 import torch
@@ -35,6 +35,11 @@ class Trainer():
         self.train_data_type = train_data_type
         print(self.target)
 
+    @property
+    def is_multilabel(self):
+        task = str(getattr(self.config, 'task_type', '') or '').replace('-', '').replace('_', '').lower()
+        return task == 'multilabel' or isinstance(self.criterion, torch.nn.BCEWithLogitsLoss)
+
     def _reset_stats(self):
         self.loss_meters = util.AverageMeter()
         self.acc_meters = util.AverageMeter()
@@ -47,6 +52,8 @@ class Trainer():
             images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True)
   
             if random_noise is not None:
+                if self.is_multilabel:
+                    raise ValueError('Class-indexed random noise is not defined for multi-label targets.')
                 random_noise = random_noise.detach().to(device)
                 for i in range(len(labels)):
                     class_index = labels[i].item()
@@ -69,10 +76,11 @@ class Trainer():
         model.train()
         for i, (images, labels) in enumerate(self.data_loader[self.target]):
             images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True)
-            
-            if self.train_data_type == 'PathMNIST' or self.train_data_type == 'DermaMNIST' or self.train_data_type == 'OCTMNIST' or self.train_data_type == 'PneumoniaMNIST' or self.train_data_type == 'RetinaMNIST' or  self.train_data_type == 'BreastMNIST' or self.train_data_type == 'BloodMNIST' or self.train_data_type == 'TissueMNIST' or self.train_data_type == 'OrganAMNIST' or self.train_data_type == 'OrganCMNIST' or self.train_data_type == 'OrganSMNIST':
+            if labels.ndim > 1 and labels.shape[1] == 1:
                 labels = torch.squeeze(labels, 1).long().to(device)
             if random_noise is not None:
+                if self.is_multilabel:
+                    raise ValueError('Class-indexed random noise is not defined for multi-label targets.')
                 random_noise = random_noise.detach().to(device)
                 for i in range(len(labels)):
                     class_index = labels[i].item()
@@ -329,7 +337,15 @@ class Trainer():
     def train_batch(self, images, labels, model, optimizer):
         model.zero_grad()
         optimizer.zero_grad()
-        if isinstance(self.criterion, torch.nn.CrossEntropyLoss):
+        if isinstance(self.criterion, torch.nn.BCEWithLogitsLoss):
+            logits = model(images)
+            targets = labels.float()
+            if targets.shape != logits.shape:
+                raise ValueError(
+                    f'Multi-label target/logit shapes must match; got {targets.shape} and {logits.shape}.'
+                )
+            loss = self.criterion(logits, targets)
+        elif isinstance(self.criterion, torch.nn.CrossEntropyLoss):
             logits = model(images)
             loss = self.criterion(logits, labels)
         else:
@@ -337,7 +353,12 @@ class Trainer():
         loss.backward()
         grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), self.config.grad_clip)
         optimizer.step()
-        if logits.shape[1] >= 5:
+        if isinstance(self.criterion, torch.nn.BCEWithLogitsLoss):
+            predicted = torch.sigmoid(logits) >= 0.5
+            expected = labels.bool()
+            acc = predicted.eq(expected).all(dim=1).float().mean().item()
+            acc5 = 1
+        elif logits.shape[1] >= 5:
             acc, acc5 = util.accuracy(logits, labels, topk=(1, 5))
             acc, acc5 = acc.item(), acc5.item()
         else:

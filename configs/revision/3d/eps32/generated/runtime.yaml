@@ -1,0 +1,95 @@
+experiments:
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  model:
+    config_path: ../../../../MedMNIST/OrganMNIST3D/resnet18_3d.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/protected/resnet18_3d/checkpoints/resnet18_3d.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 16
+  repeats: 5
+  warmup: 1
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  model:
+    config_path: ../../../../MedMNIST/NoduleMNIST3D/resnet18_3d.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/protected/resnet18_3d/checkpoints/resnet18_3d.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 16
+  repeats: 5
+  warmup: 1
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  model:
+    config_path: ../../../../MedMNIST/FractureMNIST3D/resnet18_3d.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/protected/resnet18_3d/checkpoints/resnet18_3d.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 16
+  repeats: 5
+  warmup: 1
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  model:
+    config_path: ../../../../MedMNIST/SynapseMNIST3D/resnet18_3d.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/protected/resnet18_3d/checkpoints/resnet18_3d.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 16
+  repeats: 5
+  warmup: 1
+include_average: true
+output: results/revision_pipeline_3d/posthoc/runtime_summary_eps32.csv

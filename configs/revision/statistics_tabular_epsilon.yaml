@@ -1,0 +1,13 @@
+inputs:
+  - path: ../../results/revision_pipeline_tabular/epsilon_ablation.csv
+    experiment_type: epsilon_ablation
+    value_columns:
+      - clean
+      - authorized_cooked
+      - unauthorized_raw
+      - cp
+      - pp
+      - residual_utility
+
+aggregated_output: results/revision_pipeline_tabular/aggregated_results.csv
+significance_output: results/revision_pipeline_tabular/significance_tests.csv

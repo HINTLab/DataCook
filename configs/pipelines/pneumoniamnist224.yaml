@@ -1,0 +1,35 @@
+# DataCook 224x224 pipeline for the binary PneumoniaMNIST+ dataset.
+dataset:
+  name: PneumoniaMNIST
+  poison_name: PoisonPneumoniaMNIST
+  modality: high_resolution
+  task_type: binary
+  num_classes: 2
+  high_resolution: true
+  config_path: configs/MedMNIST/PneumoniaMNIST
+  data_path: ../datasets
+  noise_shape: [4708, 3, 224, 224]
+  test_noise_shape: [624, 3, 224, 224]
+
+models:
+  surrogate: resnet18_224
+  victim: resnet18_224
+
+experiment:
+  attack_type: datacook
+  epsilon_scale: pixel
+  step_size_ratio: 0.2
+  num_steps: 20
+  universal_stop_error: 0.01
+
+seeds: [0, 1, 2]
+epsilons: [8]
+
+runtime:
+  python: python
+  train_batch_size: 8
+  eval_batch_size: 16
+  num_workers: 4
+
+experiment_root: experiments/revision_pipeline_224
+result_root: results/revision_pipeline_224

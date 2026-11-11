@@ -12,6 +12,7 @@ mlconfig.register(torch.optim.lr_scheduler.CosineAnnealingLR)
 mlconfig.register(torch.optim.lr_scheduler.StepLR)
 mlconfig.register(torch.optim.lr_scheduler.ExponentialLR)
 mlconfig.register(torch.nn.CrossEntropyLoss)
+mlconfig.register(torch.nn.BCEWithLogitsLoss)
 
 # Models
 mlconfig.register(ResNet.ResNet)
@@ -50,4 +51,3 @@ def cross_entropy(input, target, size_average=True):
         return torch.mean(torch.sum(-target * logsoftmax(input), dim=1))
     else:
         return torch.sum(torch.sum(-target * logsoftmax(input), dim=1))
-

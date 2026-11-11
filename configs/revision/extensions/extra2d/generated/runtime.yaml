@@ -1,0 +1,71 @@
+experiments:
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  model:
+    config_path: ../../../../MedMNIST/PneumoniaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_extra2d/PneumoniaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_extra2d/PneumoniaMNIST/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_extra2d/PneumoniaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_extra2d/PneumoniaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 128
+  repeats: 5
+  warmup: 1
+- metadata:
+    dataset: DermaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  model:
+    config_path: ../../../../MedMNIST/DermaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_extra2d/DermaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_extra2d/DermaMNIST/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_extra2d/DermaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_extra2d/DermaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 128
+  repeats: 5
+  warmup: 1
+- metadata:
+    dataset: OrganCMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  model:
+    config_path: ../../../../MedMNIST/OrganCMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline_extra2d/OrganCMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  data:
+    raw_inputs: ../../../../../artifacts/revision_pipeline_extra2d/OrganCMNIST/raw_test.npz::images
+    cooked_inputs: ../../../../../artifacts/revision_pipeline_extra2d/OrganCMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  cooker:
+    perturbation: ../../../../../experiments/revision_pipeline_extra2d/OrganCMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/test_perturbation.pt
+    clamp:
+    - 0
+    - 1
+  batch_size: 128
+  repeats: 5
+  warmup: 1
+output: results/revision_pipeline/posthoc/runtime_summary_extra2d.csv

@@ -1,0 +1,4 @@
+experiments: []
+# Required per record: metadata, model, data.raw_inputs, and cooker.
+# cooker: {perturbation: ../../artifacts/test_perturbation.pt, clamp: [0, 1]}
+output: results/runtime/runtime_summary.csv

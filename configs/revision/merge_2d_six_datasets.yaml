@@ -1,0 +1,36 @@
+groups:
+  main_metrics:
+    inputs:
+      - ../../results/revision_pipeline/summary/main_metrics.csv
+      - ../../results/revision_pipeline_extra2d/summary/main_metrics.csv
+    output: results/revision_pipeline_6datasets/summary/main_metrics.csv
+  cp_pp:
+    inputs:
+      - ../../results/revision_pipeline/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_extra2d/summary/cp_pp_summary.csv
+    output: results/revision_pipeline_6datasets/summary/cp_pp_summary.csv
+  adaptive_attacks:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/adaptive_attack_results_extended_2d_8seeds.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_attack_results_all_extra2d.csv
+    output: results/revision_pipeline_6datasets/posthoc/adaptive_attack_results.csv
+  finetune_budgets:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_extended_2d_8seeds.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_extra2d.csv
+    output: results/revision_pipeline_6datasets/posthoc/adaptive_finetune_budget_results.csv
+  image_quality:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/quality_metrics_extended_2d_8seeds.csv
+      - ../../results/revision_pipeline/posthoc/quality_metrics_extra2d.csv
+    output: results/revision_pipeline_6datasets/posthoc/quality_metrics.csv
+  pseudo_quality:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/pseudo_label_quality_extended_2d_8seeds.csv
+      - ../../results/revision_pipeline/posthoc/pseudo_label_quality_extra2d.csv
+    output: results/revision_pipeline_6datasets/posthoc/pseudo_label_quality.csv
+  runtime:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/runtime_summary.csv
+      - ../../results/revision_pipeline/posthoc/runtime_summary_extra2d.csv
+    output: results/revision_pipeline_6datasets/posthoc/runtime_summary.csv

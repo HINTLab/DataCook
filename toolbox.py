@@ -25,6 +25,24 @@ class PerturbationTool():
         self.patchsize = patchsize
         np.random.seed(seed)
 
+    @staticmethod
+    def _classification_loss(criterion, model, images, labels, optimizer):
+        """Run ordinary CE/BCE criteria while preserving custom criteria."""
+        if isinstance(criterion, torch.nn.BCEWithLogitsLoss):
+            logits = model(images)
+            targets = labels.float()
+            if logits.shape != targets.shape:
+                raise ValueError(
+                    f'Multi-label target/logit shapes must match; got {targets.shape} and {logits.shape}.'
+                )
+            return logits, criterion(logits, targets)
+        if isinstance(criterion, torch.nn.CrossEntropyLoss):
+            if hasattr(model, 'classify'):
+                model.classify = True
+            logits = model(images)
+            return logits, criterion(logits, labels)
+        return criterion(model, images, labels, optimizer)
+
     def random_noise(self, noise_shape=[10, 3, 32, 32]):
         random_noise = torch.FloatTensor(*noise_shape).uniform_(-self.epsilon, self.epsilon).to(device)
         return random_noise
@@ -41,13 +59,9 @@ class PerturbationTool():
             opt = torch.optim.Adam([perturb_img], lr=1e-3)
             opt.zero_grad()
             model.zero_grad()
-            if isinstance(criterion, torch.nn.CrossEntropyLoss):
-                if hasattr(model, 'classify'):
-                    model.classify = True
-                logits = model(perturb_img)
-                loss = criterion(logits, labels)
-            else:
-                logits, loss = criterion(model, perturb_img, labels, optimizer)
+            logits, loss = self._classification_loss(
+                criterion, model, perturb_img, labels, optimizer
+            )
             perturb_img.retain_grad()
             loss.backward()
             eta = self.step_size * perturb_img.grad.data.sign() * (-1)
@@ -67,23 +81,22 @@ class PerturbationTool():
 
         eta = random_noise
         first_outputs = model(perturb_img)
-        _, first_predictions = torch.max(first_outputs, dim=1)
-        if(len(first_predictions)==4):
-            Pseudo = first_predictions.squeeze(0).long()
+        if isinstance(criterion, torch.nn.BCEWithLogitsLoss):
+            Pseudo = (torch.sigmoid(first_outputs) >= 0.5).float()
         else:
-            Pseudo = first_predictions.long()
+            _, first_predictions = torch.max(first_outputs, dim=1)
+            if(len(first_predictions)==4):
+                Pseudo = first_predictions.squeeze(0).long()
+            else:
+                Pseudo = first_predictions.long()
         
         for _ in range(self.num_steps):
             opt = torch.optim.Adam([perturb_img], lr=1e-3)
             opt.zero_grad()
             model.zero_grad()
-            if isinstance(criterion, torch.nn.CrossEntropyLoss):
-                if hasattr(model, 'classify'):
-                    model.classify = True
-                logits = model(perturb_img)
-                loss = criterion(logits, Pseudo)
-            else:
-                logits, loss = criterion(model, perturb_img, Pseudo, optimizer)
+            logits, loss = self._classification_loss(
+                criterion, model, perturb_img, Pseudo, optimizer
+            )
             perturb_img.retain_grad()
             loss.backward()
             eta = self.step_size * perturb_img.grad.data.sign() * (-1)
@@ -103,24 +116,23 @@ class PerturbationTool():
         perturb_img = Variable(torch.clamp(perturb_img, 0, 1), requires_grad=True)
         eta = random_noise
         first_outputs = model(perturb_img)
-        _, first_predictions = torch.max(first_outputs, dim=1)
-        if(len(first_predictions)==4):
-            Pseudo = first_predictions.squeeze(0).long()
+        if isinstance(criterion, torch.nn.BCEWithLogitsLoss):
+            Pseudo = (torch.sigmoid(first_outputs) >= 0.5).float()
         else:
-            Pseudo = first_predictions.long()
+            _, first_predictions = torch.max(first_outputs, dim=1)
+            if(len(first_predictions)==4):
+                Pseudo = first_predictions.squeeze(0).long()
+            else:
+                Pseudo = first_predictions.long()
         
         for _ in range(self.num_steps):
             # opt = torch.optim.SGD([perturb_img], lr=1e-3)
             opt = torch.optim.Adam([perturb_img], lr=1e-3)
             opt.zero_grad()
             model.zero_grad()
-            if isinstance(criterion, torch.nn.CrossEntropyLoss):
-                if hasattr(model, 'classify'):
-                    model.classify = True
-                logits = model(perturb_img)
-                loss = criterion(logits, Pseudo)
-            else:
-                logits, loss = criterion(model, perturb_img, Pseudo, optimizer)
+            logits, loss = self._classification_loss(
+                criterion, model, perturb_img, Pseudo, optimizer
+            )
             perturb_img.retain_grad()
             loss.backward()
             eta = self.step_size * perturb_img.grad.data.sign()
@@ -137,7 +149,8 @@ class PerturbationTool():
         if random_noise is None:
             random_noise = torch.FloatTensor(*images.shape).uniform_(-self.epsilon, self.epsilon).to(device)
         
-        labels = torch.squeeze(labels, 1).long().to(device)
+        if not isinstance(criterion, torch.nn.BCEWithLogitsLoss):
+            labels = torch.squeeze(labels, 1).long().to(device)
         perturb_img = Variable(images.data + random_noise, requires_grad=True)
         perturb_img = Variable(torch.clamp(perturb_img, 0, 1), requires_grad=True)
 
@@ -146,11 +159,9 @@ class PerturbationTool():
             opt = torch.optim.SGD([perturb_img], lr=1e-3)
             opt.zero_grad()
             model.zero_grad()
-            if isinstance(criterion, torch.nn.CrossEntropyLoss):
-                logits = model(perturb_img)
-                loss = criterion(logits, labels)
-            else:
-                logits, loss = criterion(model, perturb_img, labels, optimizer)
+            logits, loss = self._classification_loss(
+                criterion, model, perturb_img, labels, optimizer
+            )
             perturb_img.retain_grad()
             loss.backward()
 
@@ -405,7 +416,6 @@ class PerturbationTool():
             simple_data_idx = simple_label == label
 
             mini_simple_data_for_train = simple_data[simple_data_idx][0:int(sum(orig_data_idx))]
-、
             mini_simple_data_for_test = simple_data[simple_data_idx][int(sum(orig_data_idx)):int(sum(orig_data_idx)) + int(sum(arr_test_target == label))]
 
             orig_data_idx = np.squeeze(orig_data_idx, 1)

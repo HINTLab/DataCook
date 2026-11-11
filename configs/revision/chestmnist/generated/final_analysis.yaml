@@ -1,0 +1,10 @@
+inputs:
+  cp_pp: ../../../../results/revision_pipeline/summary/cp_pp_summary.csv
+  quality: ../../../../results/revision_pipeline/posthoc/quality_metrics_chestmnist.csv
+  attacks: ../../../../results/revision_pipeline/posthoc/adaptive_attack_results_all_chestmnist.csv
+  budget_attacks: ../../../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_chestmnist.csv
+  runtime: ../../../../results/revision_pipeline/posthoc/runtime_summary_chestmnist.csv
+  pseudo: ../../../../results/revision_pipeline/posthoc/pseudo_label_quality_chestmnist.csv
+full_subset_sizes:
+  ChestMNIST: 11219
+output_dir: results/revision_pipeline/final_chestmnist

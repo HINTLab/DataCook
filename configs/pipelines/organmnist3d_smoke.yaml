@@ -1,0 +1,34 @@
+# Single-GPU end-to-end smoke test for the 3D DataCook pipeline.
+dataset:
+  name: OrganMNIST3D
+  poison_name: PoisonOrganMNIST3D
+  modality: 3d_volume
+  task_type: multiclass
+  num_classes: 11
+  config_path: configs/MedMNIST/OrganMNIST3D
+  data_path: ../datasets
+  noise_shape: [971, 1, 28, 28, 28]
+  test_noise_shape: [610, 1, 28, 28, 28]
+
+models:
+  surrogate: resnet18_3d
+  victim: resnet18_3d
+
+experiment:
+  attack_type: datacook
+  epsilon_scale: pixel
+  step_size_ratio: 0.2
+  num_steps: 20
+  universal_stop_error: 0.01
+
+seeds: [0]
+epsilons: [8]
+
+runtime:
+  python: python
+  train_batch_size: 16
+  eval_batch_size: 16
+  num_workers: 4
+
+experiment_root: experiments/revision_pipeline_3d
+result_root: results/revision_pipeline_3d

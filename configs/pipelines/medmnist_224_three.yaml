@@ -1,0 +1,5 @@
+# Representative MedMNIST+ 224x224 suite.
+pipelines:
+  - breastmnist224.yaml
+  - pneumoniamnist224.yaml
+  - retinamnist224.yaml

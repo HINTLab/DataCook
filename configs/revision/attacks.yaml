@@ -1,0 +1,12 @@
+experiments: []
+# Each record uses the metadata/predictions schema from metrics.yaml and:
+# attacks:
+#   - {type: jpeg, strength: 95, predictions: ../../artifacts/jpeg95.npz}
+#   - {type: gaussian_smoothing, strength: {sigma: 1.0, kernel_size: 5}, predictions: ...}
+#   - {type: strong_augmentation, strength: 2, predictions: ...}
+#   - type: finetune
+#     epochs: 5
+#     model: {config_path: ../MedMNIST/BloodMNIST/resnet18.yaml, checkpoint: ...}
+#     raw_subset: {inputs: raw_subset.npz::images, labels: raw_subset.npz::labels}
+#     eval_data: {inputs: raw_test.npz::images, labels: raw_test.npz::labels}
+output: results/attacks/adaptive_attack_results.csv

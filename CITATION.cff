@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the DataCook paper."
+type: software
+title: "DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control"
+authors:
+  - family-names: Shang
+    given-names: Sihan
+  - family-names: Yan
+    given-names: Jun
+  - family-names: Shi
+    given-names: Danli
+  - family-names: Zheng
+    given-names: Haizhong
+  - family-names: Zheng
+    given-names: Shuangjia
+  - family-names: Zhao
+    given-names: Wei
+  - family-names: Yang
+    given-names: Jiancheng
+year: 2026
+license: Apache-2.0
+repository-code: "https://github.com/HINTLab/DataCook"
+url: "https://github.com/HINTLab/DataCook"
+preferred-citation:
+  type: article
+  title: "DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control"
+  authors:
+    - family-names: Shang
+      given-names: Sihan
+    - family-names: Yan
+      given-names: Jun
+    - family-names: Shi
+      given-names: Danli
+    - family-names: Zheng
+      given-names: Haizhong
+    - family-names: Zheng
+      given-names: Shuangjia
+    - family-names: Zhao
+      given-names: Wei
+    - family-names: Yang
+      given-names: Jiancheng
+  journal: Meta-Radiology
+  year: 2026
+  url: "https://arxiv.org/abs/2403.17755"
+  notes: "Accepted for publication; journal DOI pending."

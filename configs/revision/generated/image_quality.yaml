@@ -1,0 +1,587 @@
+experiments:
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.00784313725490196
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=2/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.01568627450980392
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=4/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.047058823529411764
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    cooked: ../../../artifacts/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: true
+output: results/revision_pipeline/posthoc/quality_metrics.csv

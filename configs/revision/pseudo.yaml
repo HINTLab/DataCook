@@ -1,0 +1,6 @@
+experiments: []
+# pseudo_labels: ../../experiment/resnet18/pseudo_labels_train_dataset.npz
+# predictions: {clean: ..., authorized_cooked: ..., unauthorized_raw: ...}
+outputs:
+  samples: results/analysis/pseudo_label_samples.csv
+  quality: results/analysis/pseudo_label_quality.csv

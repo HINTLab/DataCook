@@ -1,0 +1,25 @@
+groups:
+  main_metrics:
+    inputs:
+      - ../../results/revision_pipeline_tabular/datasets/diabetes/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular/datasets/hepatitis_c/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular/datasets/systemic_diseases/summary/main_metrics.csv
+    output: results/revision_pipeline_tabular/summary/main_metrics.csv
+  cp_pp:
+    inputs:
+      - ../../results/revision_pipeline_tabular/datasets/diabetes/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular/datasets/hepatitis_c/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular/datasets/systemic_diseases/summary/cp_pp_summary.csv
+    output: results/revision_pipeline_tabular/summary/cp_pp_summary.csv
+  epsilon:
+    inputs:
+      - ../../results/revision_pipeline_tabular/datasets/diabetes/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular/datasets/hepatitis_c/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular/datasets/systemic_diseases/epsilon_ablation.csv
+    output: results/revision_pipeline_tabular/epsilon_ablation.csv
+  runtime:
+    inputs:
+      - ../../results/revision_pipeline_tabular/datasets/diabetes/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular/datasets/hepatitis_c/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular/datasets/systemic_diseases/runtime_summary.csv
+    output: results/revision_pipeline_tabular/runtime_summary.csv

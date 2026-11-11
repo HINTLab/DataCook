@@ -216,3 +216,31 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS / editors
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local datasets and generated research artifacts
+data/
+datasets/
+experiments/
+results/
+outputs/
+artifacts/
+revision_logs/
+runs/
+wandb/
+
+# Model, prediction, and perturbation artifacts
+*.ckpt
+*.pt
+*.pth
+*.pkl
+*.npz
+
+# Local tabular data and logs
+TableData/dataset/
+*.csv
+*.log

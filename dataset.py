@@ -32,7 +32,7 @@ transform_options = {
 for name in [
     'PoisonPathMNIST','PoisonDermaMNIST','PoisonOCTMNIST','PoisonPneumoniaMNIST',
     'PoisonRetinaMNIST','PoisonBreastMNIST','PoisonBloodMNIST','PoisonTissueMNIST',
-    'PoisonOrganAMNIST','PoisonOrganCMNIST','PoisonOrganSMNIST'
+    'PoisonOrganAMNIST','PoisonOrganCMNIST','PoisonOrganSMNIST','PoisonChestMNIST'
 ]:
     transform_options[name] = transform_options['MedMNIST']
 
@@ -43,7 +43,10 @@ for name in [
     transform_options[name] = transform_options['MedMNIST3D']
 
 MED2D_RGB = {'PathMNIST','DermaMNIST','RetinaMNIST','BloodMNIST'}
-MED2D_GRAY  = {'OrganAMNIST','OrganCMNIST','OrganSMNIST','OCTMNIST','PneumoniaMNIST','BreastMNIST','TissueMNIST'}
+MED2D_GRAY  = {
+    'OrganAMNIST','OrganCMNIST','OrganSMNIST','OCTMNIST','PneumoniaMNIST',
+    'BreastMNIST','TissueMNIST','ChestMNIST'
+}
 MED3D      = {'OrganMNIST3D','NoduleMNIST3D','FractureMNIST3D','AdrenalMNIST3D','VesselMNIST3D','SynapseMNIST3D'}
 
 IMG_EXTS = {'.jpg','.jpeg','.png','.ppm','.bmp','.tiff','.npz'}
@@ -91,7 +94,7 @@ def _compose(p):
 # =========================
 # Dataset builders
 # =========================
-def _build_official(dtype: str, split: str, tfm, high_resolution: bool):
+def _build_official(dtype: str, split: str, path: str, tfm, high_resolution: bool):
     """
     Build an official MedMNIST dataset.
     Handles RGB/Grayscale and optional high-resolution resizing.
@@ -108,10 +111,17 @@ def _build_official(dtype: str, split: str, tfm, high_resolution: bool):
     else:
         as_rgb = True  # fallback
 
+    root = os.path.abspath(os.path.expanduser(path))
     if high_resolution and (_is_gray2d(dtype) or _is_rgb2d(dtype)):
-        return DataClass(split=split, transform=tfm, download=True, as_rgb=as_rgb, size=224)
+        return DataClass(
+            split=split, transform=tfm, download=True,
+            as_rgb=as_rgb, size=224, root=root,
+        )
     else:
-        return DataClass(split=split, transform=tfm, download=True, as_rgb=as_rgb)
+        return DataClass(
+            split=split, transform=tfm, download=True,
+            as_rgb=as_rgb, root=root,
+        )
 
 def _build_poison(base_dtype: str, path: str, split: str, tfm, high_resolution: bool):
     """
@@ -119,7 +129,10 @@ def _build_poison(base_dtype: str, path: str, split: str, tfm, high_resolution: 
     Prefers a custom class named Poison{BaseType}, 
     falls back to folder/npz loaders if not found.
     """
-    if _is_3d(base_dtype) or high_resolution:
+    # Multi-label samples cannot be represented by one integer-named class
+    # folder.  ChestMNIST therefore shares the lossless channel-first NPZ
+    # contract used by volumetric datasets.
+    if _is_3d(base_dtype) or base_dtype == 'ChestMNIST':
         return Data3DFolderWithLabel(path, None, transform=tfm)
     else:
         return DataFolderWithLabel(path, None, transform=tfm)
@@ -130,7 +143,7 @@ def _make_dataset(dtype: str, split: str, path: str, tfm, high_resolution: bool)
         return _build_poison(_base(dtype), path, split, tfm, high_resolution)
     base = _base(dtype)
     if _is_gray2d(base) or _is_rgb2d(base) or _is_3d(base):
-        return _build_official(base, split, tfm, high_resolution)
+        return _build_official(base, split, path, tfm, high_resolution)
     raise ValueError(f"Dataset type {dtype} not implemented.")
 
 # =========================
@@ -238,7 +251,7 @@ class Data3DFolderWithLabel(Dataset):
     3D or high-resolution dataset loader (current version: loads from a single .npz file).
     The .npz file must contain:
         - perturb_images: shape (N, D, H, W) or (N, C, D, H, W)
-        - perturb_labels: shape (N,)
+        - perturb_labels: shape (N,) or (N,L) for multi-label data
     """
     def __init__(self, npz_file, pred_idx=None, transform=None):
         data = np.load(npz_file)
@@ -252,7 +265,10 @@ class Data3DFolderWithLabel(Dataset):
 
     def __getitem__(self, idx):
         image, label = self.images[idx], self.labels[idx]
-        if self.transform:
-            image = self.transform(image)
-        return image, label, self.pred_idx[idx]
-
+        # Cooked NPZ arrays are already normalized and channel-first. Applying
+        # torchvision.ToTensor here would interpret CHW as HWC; tensorize them
+        # directly instead.  This is also the desired representation for 3D.
+        image = torch.as_tensor(np.asarray(image), dtype=torch.float32)
+        label = torch.as_tensor(np.asarray(label))
+        pred_idx = torch.as_tensor(np.asarray(self.pred_idx[idx]))
+        return image, label, pred_idx

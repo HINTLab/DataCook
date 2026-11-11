@@ -1,0 +1,5 @@
+# Paths are relative to this suite file.
+pipelines:
+  - bloodmnist.yaml
+  - breastmnist.yaml
+  - retinamnist.yaml

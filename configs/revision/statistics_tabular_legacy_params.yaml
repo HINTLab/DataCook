@@ -1,0 +1,13 @@
+inputs:
+  - path: ../../results/revision_pipeline_tabular_legacy_params/epsilon_ablation.csv
+    experiment_type: legacy_parameter_budget_ablation
+    value_columns:
+      - clean
+      - authorized_cooked
+      - unauthorized_raw
+      - cp
+      - pp
+      - residual_utility
+
+aggregated_output: results/revision_pipeline_tabular_legacy_params/aggregated_results.csv
+significance_output: results/revision_pipeline_tabular_legacy_params/significance_tests.csv

@@ -3,6 +3,7 @@ import datetime
 import os
 import shutil
 import time
+import random
 import torch
 import numpy as np
 from pathlib import Path
@@ -16,6 +17,7 @@ import toolbox
 
 from trainer import Trainer
 from evaluator import Evaluator
+from volume_io import save_cooked_array_npz, save_cooked_volume_npz
 
 
 from sklearn.cluster import KMeans
@@ -36,6 +38,10 @@ def parse_args():
     parser.add_argument('--config_path', type=str, default='configs/MedMNIST', help='Path to configuration YAML')
     parser.add_argument('--load_model', action='store_true', help='Whether to load pretrained model')
     parser.add_argument('--data_parallel', action='store_true', help='Use DataParallel for multi-GPU')
+    parser.add_argument('--deterministic', action='store_true',
+                        help='Use deterministic PyTorch algorithms for reproducible multi-seed runs')
+    parser.add_argument('--export_predictions_dir', type=str, default='',
+                        help='Save clean surrogate predictions using the revision NPZ contract')
 
     # Dataset options
     parser.add_argument('--train_batch_size', type=int, default=128)
@@ -47,6 +53,8 @@ def parse_args():
     parser.add_argument('--test_data_path', type=str, default='../datasets')
     parser.add_argument('--recover_test_data_type', type=str, default='PathMNIST')
     parser.add_argument('--recover_test_data_path', type=str, default='../datasets')
+    parser.add_argument('--high_resolution', action='store_true',
+                        help='Load the official 224x224 MedMNIST+ split')
 
     # fingerprint options
     parser.add_argument('--universal_stop_error', type=float, default=0.5)
@@ -57,6 +65,8 @@ def parse_args():
     parser.add_argument('--noise_shape', type=int, nargs='+', default=[10, 3, 32, 32])
     parser.add_argument('--test_noise_shape', type=int, nargs='+', default=[10, 3, 32, 32])
     parser.add_argument('--epsilon', type=float, default=8, help='Max size of fingerprint')
+    parser.add_argument('--epsilon_scale', choices=['pixel', 'unit'], default='pixel',
+                        help='Interpret epsilon/step_size in 0-255 pixel units (legacy) or directly in [0,1] units')
     parser.add_argument('--num_steps', type=int, default=1, help='Number of PGD steps')
     parser.add_argument('--step_size', type=float, default=0.8, help='Step size for PGD')
     
@@ -65,6 +75,11 @@ def parse_args():
     parser.add_argument('--g_net_lr', default=1e-2, type=float)
     parser.add_argument('--g_net_num_epoch', default=50, type=int)
     return parser.parse_args()
+
+
+def _is_multilabel_task(task_type):
+    normalized = str(task_type or '').replace('-', '').replace('_', '').replace(' ', '').lower()
+    return normalized == 'multilabel' or normalized.startswith('multilabel,')
 
 def setup_environment(args):
     """
@@ -76,9 +91,15 @@ def setup_environment(args):
     Returns:
         tuple: exp_path, checkpoint_path, fingerprint_path, logger, device, num_classes
     """
-    # Convert epsilon and step size from pixel range to [0,1]
-    args.epsilon /= 255.0
-    args.step_size /= 255.0
+    # Legacy scripts pass 8 for 8/255. Revision configs may pass 8/255
+    # directly and select --epsilon_scale unit.
+    if args.epsilon_scale == 'pixel':
+        args.epsilon /= 255.0
+        args.step_size /= 255.0
+    if args.epsilon < 0 or args.epsilon > 1:
+        raise ValueError('Normalized epsilon must be in [0, 1].')
+    if args.step_size <= 0:
+        raise ValueError('step_size must be positive.')
 
     # Setup experiment directories  
     if args.exp_name == '':
@@ -95,10 +116,19 @@ def setup_environment(args):
     logger = util.setup_logger(name=args.version, log_file=os.path.join(exp_path, args.version + ".log"))
 
     # Setup device
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if args.deterministic and hasattr(torch, 'use_deterministic_algorithms'):
+        try:
+            torch.use_deterministic_algorithms(True, warn_only=True)
+        except TypeError:
+            torch.use_deterministic_algorithms(True)
     if torch.cuda.is_available():
-        torch.cuda.manual_seed(args.seed)
+        torch.cuda.manual_seed_all(args.seed)
         torch.backends.cudnn.enabled = True
-        torch.backends.cudnn.benchmark = True
+        torch.backends.cudnn.benchmark = not args.deterministic
+        torch.backends.cudnn.deterministic = args.deterministic
         device = torch.device('cuda')
         logger.info("Using GPU: %s", torch.cuda.get_device_name(0))
     else:
@@ -112,8 +142,31 @@ def setup_environment(args):
     # Get number of classes from MedMNIST info
     info = INFO[args.train_data_type.lower()]
     num_classes = len(info['label'])
+    args.task_type = 'multilabel' if _is_multilabel_task(info.get('task')) else None
 
     return exp_path, checkpoint_path, fingerprint_path, logger, device, num_classes
+
+
+def save_pseudo_label_artifacts(model, data_loader, output_dir, device, logger):
+    """Persist the surrogate predictions actually available during cooking.
+
+    Files are NPZ rather than CSV so multilabel probabilities/logits retain their
+    shape. ``run_pseudo_label_analysis.py`` converts them to the required long CSV.
+    """
+    os.makedirs(output_dir, exist_ok=True)
+    model.eval()
+    for split in ('train_dataset', 'test_dataset'):
+        labels_all, logits_all = [], []
+        with torch.no_grad():
+            for batch in data_loader[split]:
+                images, labels = batch[0].to(device), batch[1]
+                logits_all.append(model(images).detach().cpu())
+                labels_all.append(labels.detach().cpu())
+        labels = torch.cat(labels_all).numpy()
+        logits = torch.cat(logits_all).numpy()
+        path = os.path.join(output_dir, f'pseudo_labels_{split}.npz')
+        np.savez_compressed(path, sample_id=np.arange(len(labels)), y_true=labels, logits=logits)
+        logger.info('Pseudo-label artifact saved at %s', path)
 
 def train(args, config, logger, model, optimizer, scheduler, criterion, trainer, evaluator, ENV, ckpt_path):
     """
@@ -124,52 +177,58 @@ def train(args, config, logger, model, optimizer, scheduler, criterion, trainer,
     model_file = os.path.join(ckpt_path, f"{args.version}_{config.epochs}.pth")
     logger.info('Model Saved at %s', model_file)
 
+    starting_epoch = 0
     if os.path.exists(model_file):
-        latest_model_path = model_file
-        logger.info("Loading model from %s", latest_model_path)
-        checkpoint = torch.load(latest_model_path)
+        logger.info("Loading model from %s", model_file)
+        model_device = next(model.parameters()).device
+        checkpoint = torch.load(model_file, map_location=model_device)
         model.load_state_dict(checkpoint['model_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+        if checkpoint.get('optimizer_state_dict') is not None:
+            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        if checkpoint.get('scheduler_state_dict') is not None:
+            scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+        starting_epoch = int(checkpoint.get('epoch', 0))
+        if 'ENV' in checkpoint:
+            ENV.update(checkpoint['ENV'])
+            trainer.global_step = ENV.get('global_step', trainer.global_step)
+        logger.info("Resuming surrogate training from epoch %d/%d", starting_epoch, config.epochs)
+
+    if starting_epoch >= config.epochs:
         logger.info("Evaluating model without fine-tuning...")
+        evaluator._reset_stats()
         evaluator.eval_model(0, model)
         payload = ('Eval Loss:%.4f\tEval acc: %.2f' % (evaluator.loss_meters.avg, evaluator.acc_meters.avg*100))
         logger.info(payload)
-        return 
-
-    else:
-        logger.info("Starting or continuing training process...")
-        for epoch in range(config.epochs):
-            logger.info("")
-            logger.info("="*20 + "Training Epoch %d" % (epoch) + "="*20)
-
-            # Train
-            ENV['global_step'] = trainer.train_model(epoch, model, criterion, optimizer)
-            ENV['train_history'].append(trainer.acc_meters.avg*100)
-            scheduler.step()
-
-            # Eval
-            logger.info("="*20 + "Eval Epoch %d" % (epoch) + "="*20)
-            evaluator.eval_model(epoch, model)
-            payload = ('Eval Loss:%.4f\tEval acc: %.2f' % (evaluator.loss_meters.avg, evaluator.acc_meters.avg*100))
-            logger.info(payload)
-            ENV['eval_history'].append(evaluator.acc_meters.avg*100)
-            ENV['curren_acc'] = evaluator.acc_meters.avg*100
-
-            # Reset Stats
-            trainer._reset_stats()
-            evaluator._reset_stats()
-
-            # Save Model
-            target_model = model.module if args.data_parallel else model
-            util.save_model(ENV=ENV,
-                            epoch=epoch,
-                            model=target_model,
-                            optimizer=optimizer,
-                            scheduler=scheduler,
-                            filename=model_file)
-            logger.info('Model Saved at %s', model_file)
         return
+
+    logger.info("Starting or continuing training process...")
+    for epoch in range(starting_epoch, config.epochs):
+        logger.info("")
+        logger.info("="*20 + "Training Epoch %d" % (epoch) + "="*20)
+
+        ENV['global_step'] = trainer.train_model(epoch, model, criterion, optimizer)
+        ENV['train_history'].append(trainer.acc_meters.avg*100)
+        scheduler.step()
+
+        logger.info("="*20 + "Eval Epoch %d" % (epoch) + "="*20)
+        evaluator.eval_model(epoch, model)
+        payload = ('Eval Loss:%.4f\tEval acc: %.2f' % (evaluator.loss_meters.avg, evaluator.acc_meters.avg*100))
+        logger.info(payload)
+        ENV['eval_history'].append(evaluator.acc_meters.avg*100)
+        ENV['curren_acc'] = evaluator.acc_meters.avg*100
+
+        trainer._reset_stats()
+        evaluator._reset_stats()
+
+        target_model = model.module if args.data_parallel else model
+        util.save_model(ENV=ENV,
+                        epoch=epoch,
+                        model=target_model,
+                        optimizer=optimizer,
+                        scheduler=scheduler,
+                        filename=model_file)
+        logger.info('Model Saved at %s', model_file)
+    return
 
 def check_ssim(lsp_noise, lsp_test_noise, data_loader, num_classes, perturbation_path, device, logger):
     """
@@ -368,7 +427,8 @@ def sample_wise_perturbation(args, logger, num_classes, perturbation_path,  nois
                                                   recover_test_data_path=args.recover_test_data_path, 
                                                   recover_test_data_type=args.recover_test_data_type,
                                                   num_of_workers=args.num_of_workers,
-                                                  seed=args.seed, no_train_augments=True)
+                                                  seed=args.seed, no_train_augments=True,
+                                                  high_resolution=args.high_resolution)
 
 
     data_loader = datasets_generator.getDataLoader(train_shuffle=False, train_drop_last=False)
@@ -384,7 +444,12 @@ def sample_wise_perturbation(args, logger, num_classes, perturbation_path,  nois
         idx = 0
         for images, _ in ds:
             for image in images:
-                patch_cord, _ = noise_generator._patch_noise_extend_to_img(noise[idx], image.shape, args.patch_location)
+                if image.ndim == 4:
+                    patch_cord, _ = noise_generator._patch_noise_to_3d_img(
+                        noise[idx], image.shape, args.patch_location)
+                else:
+                    patch_cord, _ = noise_generator._patch_noise_extend_to_img(
+                        noise[idx], image.shape, args.patch_location)
                 cord_list.append(patch_cord)
                 idx += 1
 
@@ -402,16 +467,21 @@ def sample_wise_perturbation(args, logger, num_classes, perturbation_path,  nois
             idx = 0
             for images, labels in loader:
                 images, labels = images.to(device), labels.to(device)
+                if labels.ndim > 1 and labels.shape[1] == 1:
+                    labels = torch.squeeze(labels, 1).long()
                 batch_fingerprint, start_idx = [], idx
 
                 for i, image in enumerate(images):
-                    c, h, w = image.shape
-                    mask = torch.zeros((c, h, w), dtype=torch.float32)
-                    x1, x2, y1, y2 = cords[idx]
                     patch = fingerprint[idx]
                     if isinstance(patch, np.ndarray):
                         patch = torch.tensor(patch)
-                    mask[:, x1:x2, y1:y2] = patch
+                    mask = torch.zeros_like(image, device='cpu')
+                    if image.ndim == 4:
+                        x1, x2, y1, y2, z1, z2 = cords[idx]
+                        mask[:, x1:x2, y1:y2, z1:z2] = patch
+                    else:
+                        x1, x2, y1, y2 = cords[idx]
+                        mask[:, x1:x2, y1:y2] = patch
                     batch_fingerprint.append(mask)
                     idx += 1
 
@@ -430,8 +500,13 @@ def sample_wise_perturbation(args, logger, num_classes, perturbation_path,  nois
                     raise ValueError(f"Unknown attack type {args.attack_type}")
 
                 for i, d in enumerate(delta):
-                    x1, x2, y1, y2 = cords[start_idx + i]
-                    d_patch = d[:, x1:x2, y1:y2]
+                    cord = cords[start_idx + i]
+                    if d.ndim == 4:
+                        x1, x2, y1, y2, z1, z2 = cord
+                        d_patch = d[:, x1:x2, y1:y2, z1:z2]
+                    else:
+                        x1, x2, y1, y2 = cord
+                        d_patch = d[:, x1:x2, y1:y2]
                     fingerprint[start_idx + i] = d_patch.detach().cpu()
 
         # ---------------------------
@@ -474,7 +549,7 @@ def add_samplewise_perturbation(args, logger, num_classes, perturbation_path, ra
     }
 
     def _ensure_labels_shape(name, labels):
-        if args.train_data_type in MED2D:
+        if args.train_data_type in MED2D and labels.ndim > 1 and labels.shape[1] == 1:
             return torch.squeeze(labels, 1).long()
         return labels
 
@@ -489,9 +564,14 @@ def add_samplewise_perturbation(args, logger, num_classes, perturbation_path, ra
             logger.info(f"Skip {prefix}: noise_bank is None")
             return 0.0
 
-        _mkdir_split(prefix)
+        is_3d = len(noise_bank.shape) == 5
+        is_multilabel = _is_multilabel_task(getattr(args, 'task_type', None))
+        save_as_npz = is_3d or is_multilabel
+        if not save_as_npz:
+            _mkdir_split(prefix)
         idx = 0
         ssim_total, num_images = 0.0, 0
+        volume_images, volume_labels = [], []
 
         for images, labels in data_loader[loader_key]:
             images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True)
@@ -499,27 +579,53 @@ def add_samplewise_perturbation(args, logger, num_classes, perturbation_path, ra
 
             for j, (image, label) in enumerate(zip(images, labels)):
                 # prepare patch-only noise mask
-                c, h, w = image.shape
                 sample_noise = torch.tensor(noise_bank[idx]).to(device) if not torch.is_tensor(noise_bank) else noise_bank[idx].to(device)
-                x1, x2, y1, y2 = coords[idx]
-                mask = np.zeros((c, h, w), np.float32)
-                mask[:, x1:x2, y1:y2] = sample_noise.detach().cpu().numpy()
-                sample_noise = torch.from_numpy(mask).to(device)
+                mask = torch.zeros_like(image)
+                if image.ndim == 4:
+                    x1, x2, y1, y2, z1, z2 = coords[idx]
+                    mask[:, x1:x2, y1:y2, z1:z2] = sample_noise
+                else:
+                    x1, x2, y1, y2 = coords[idx]
+                    mask[:, x1:x2, y1:y2] = sample_noise
+                sample_noise = mask
 
                 # apply noise
-                images[j] = images[j] + sample_noise
+                original = images[j].clone()
+                images[j] = torch.clamp(images[j] + sample_noise, 0, 1)
 
                 # save
-                gt = label.item()
-                save_image(images[j], os.path.join(perturbation_path, '..', f'{prefix}', str(gt), f'{j}_{idx}.png'))
-                save_image(sample_noise, os.path.join(perturbation_path, '..', f'{prefix}_noisy', str(gt), f'{j}_{idx}.png'))
+                if save_as_npz:
+                    volume_images.append(images[j].detach().cpu().numpy().astype(np.float32))
+                    if is_multilabel:
+                        volume_labels.append(label.detach().cpu().numpy().astype(np.int64))
+                    else:
+                        volume_labels.append(label.item())
+                else:
+                    gt = label.item()
+                    save_image(images[j], os.path.join(perturbation_path, '..', f'{prefix}', str(gt), f'{j}_{idx}.png'))
+                    save_image(sample_noise, os.path.join(perturbation_path, '..', f'{prefix}_noisy', str(gt), f'{j}_{idx}.png'))
 
-                # compute SSIM (original image ≈ images[j] - sample_noise)
-                img_np = (images[j] - sample_noise).squeeze(0).permute(1, 2, 0).detach().cpu().numpy()
-                pert_np = images[j].squeeze(0).permute(1, 2, 0).detach().cpu().numpy()
-                ssim_total += ssim(img_np, pert_np, channel_axis=2, data_range=1)
+                # Compute SSIM on the full volume for 3D and channel-last images for 2D.
+                if is_3d:
+                    img_np = original.squeeze(0).detach().cpu().numpy()
+                    pert_np = images[j].squeeze(0).detach().cpu().numpy()
+                    ssim_total += ssim(img_np, pert_np, data_range=1)
+                else:
+                    img_np = original.permute(1, 2, 0).detach().cpu().numpy()
+                    pert_np = images[j].permute(1, 2, 0).detach().cpu().numpy()
+                    ssim_total += ssim(img_np, pert_np, channel_axis=2, data_range=1)
                 num_images += 1
                 idx += 1
+
+        if save_as_npz:
+            output_dir = Path(perturbation_path).parent / prefix
+            output_dir.mkdir(parents=True, exist_ok=True)
+            output_path = output_dir / 'perturb_data.npz'
+            if is_3d:
+                save_cooked_volume_npz(output_path, volume_images, volume_labels)
+            else:
+                save_cooked_array_npz(output_path, volume_images, volume_labels)
+            logger.info('Cooked NPZ split saved at %s', output_path)
 
         avg = ssim_total / max(1, num_images)
         logger.info(f'Average {prefix} SSIM: {avg:.4f}')
@@ -550,7 +656,8 @@ def sample_wise_perturbation_min_min(args, logger, num_classes, perturbation_pat
                                                   recover_test_data_path=args.recover_test_data_path, 
                                                   recover_test_data_type=args.recover_test_data_type,
                                                   num_of_workers=args.num_of_workers,
-                                                  seed=args.seed, no_train_augments=True)
+                                                  seed=args.seed, no_train_augments=True,
+                                                  high_resolution=args.high_resolution)
 
 
     data_loader = datasets_generator.getDataLoader(train_shuffle=False, train_drop_last=False)
@@ -649,7 +756,7 @@ def sample_wise_perturbation_min_min(args, logger, num_classes, perturbation_pat
             elif args.attack_type == 'EM-Pseudo':
                 perturb_img, eta = noise_generator.datacook_v1(images, labels, model, optimizer, criterion, random_noise=batch_noise)
             else:
-                raise('Invalid attack')
+                raise ValueError('Invalid attack')
 
             for i, delta in enumerate(eta):
                 x1, x2, y1, y2 = mask_cord_list[batch_start_idx+i]
@@ -692,7 +799,7 @@ def sample_wise_perturbation_min_min(args, logger, num_classes, perturbation_pat
             elif args.attack_type == 'EM-Pseudo':
                 perturb_img, eta = noise_generator.datacook_v1(images, labels, model, optimizer, criterion, random_noise=batch_test_noise)            
             else:
-                raise('Invalid attack')
+                raise ValueError('Invalid attack')
 
             for i, delta in enumerate(eta):
                 x1, x2, y1, y2 = test_mask_cord_list[batch_test_start_idx+i]
@@ -717,7 +824,7 @@ def sample_wise_perturbation_min_min(args, logger, num_classes, perturbation_pat
         elif args.attack_type == 'EM-Pseudo':
             condition = (number_attack <= 5) and (error_rate > args.universal_stop_error)
 
-    add_samplewise_perturbation(args, logger, num_classes, perturbation_path, random_noise, random_test_noise, data_loader, device, eval_target='train_dataset', mask_cord_list=mask_cord_list) 
+    add_samplewise_perturbation(args, logger, num_classes, perturbation_path, random_noise, random_test_noise, data_loader, device, mask_cord_list=mask_cord_list, test_mask_cord_list=test_mask_cord_list)
 
     return random_noise, random_test_noise
 
@@ -728,20 +835,14 @@ def samplewise_perturbation_eval(args, random_noise, random_test_noise, data_loa
     model = model.to(device)
     idx = 0
 
-    # Datasets that need label squeeze from (B,1) -> (B,)
-    MED2D = {
-        'PathMNIST','DermaMNIST','OCTMNIST','PneumoniaMNIST','RetinaMNIST',
-        'BreastMNIST','BloodMNIST','TissueMNIST','OrganAMNIST','OrganCMNIST','OrganSMNIST'
-    }
-
     def _ensure_labels_shape(name, labels):
-        if args.train_data_type in MED2D:
+        if labels.ndim > 1 and labels.shape[1] == 1:
             return torch.squeeze(labels, 1).long()
         return labels
 
     for i, (images, labels) in enumerate(data_loader[eval_target]):
         images, labels = images.to(device, non_blocking=True), labels.to(device, non_blocking=True)
-        labels = _ensure_labels_shape(loader_key, labels).to(device)    
+        labels = _ensure_labels_shape(eval_target, labels).to(device)
             
         if random_noise is not None:
             for j, (image, label) in enumerate(zip(images, labels)):
@@ -749,17 +850,30 @@ def samplewise_perturbation_eval(args, random_noise, random_test_noise, data_loa
                     sample_noise = torch.tensor(random_noise[idx]).to(device)
                 else:
                     sample_noise = random_noise[idx].to(device)
-                c, h, w = image.shape[0], image.shape[1], image.shape[2]
-                mask = np.zeros((c, h, w), np.float32)
-                x1, x2, y1, y2 = mask_cord_list[idx]
-                mask[:, x1: x2, y1: y2] = sample_noise.cpu().numpy()
-                sample_noise = torch.from_numpy(mask).to(device)
+                mask = torch.zeros_like(image)
+                if image.ndim == 4:
+                    x1, x2, y1, y2, z1, z2 = mask_cord_list[idx]
+                    mask[:, x1:x2, y1:y2, z1:z2] = sample_noise
+                else:
+                    x1, x2, y1, y2 = mask_cord_list[idx]
+                    mask[:, x1:x2, y1:y2] = sample_noise
+                sample_noise = mask
                 images[j] = images[j] + sample_noise
                 idx += 1
         
         pred = model(images)
-        err = (pred.data.max(1)[1] != labels.data).float().sum()
-        loss = torch.nn.CrossEntropyLoss()(pred, labels)
+        if _is_multilabel_task(getattr(args, 'task_type', None)):
+            targets = labels.float()
+            if pred.shape != targets.shape:
+                raise ValueError(
+                    f'Multi-label target/logit shapes must match; got {targets.shape} and {pred.shape}.'
+                )
+            predicted = torch.sigmoid(pred) >= 0.5
+            err = (~predicted.eq(targets.bool()).all(dim=1)).float().sum()
+            loss = torch.nn.BCEWithLogitsLoss()(pred, targets)
+        else:
+            err = (pred.data.max(1)[1] != labels.data).float().sum()
+            loss = torch.nn.CrossEntropyLoss()(pred, labels)
         loss_meter.update(loss.item(), len(labels))
         err_meter.update(err / len(labels))
        
@@ -776,6 +890,11 @@ def main():
     # Load configuration
     config_file = os.path.join(args.config_path, args.version + '.yaml')
     config = mlconfig.load(config_file)
+    config_task = getattr(config, 'task_type', None)
+    if args.task_type == 'multilabel' and not _is_multilabel_task(config_task):
+        raise ValueError(
+            f'{args.train_data_type} is multi-label but {config_file} does not set task_type: multilabel.'
+        )
     config.set_immutable()
     shutil.copyfile(config_file, os.path.join(exp_path, args.version + '.yaml'))
 
@@ -788,7 +907,8 @@ def main():
                                                   recover_test_data_path=args.recover_test_data_path, 
                                                   recover_test_data_type=args.recover_test_data_type,
                                                   num_of_workers=args.num_of_workers,
-                                                  seed=args.seed)
+                                                  seed=args.seed,
+                                                  high_resolution=args.high_resolution)
 
 
     data_loader = datasets_generator.getDataLoader(train_shuffle=False, train_drop_last=False)
@@ -815,6 +935,7 @@ def main():
         model = torch.nn.DataParallel(model)
 
     if args.load_model:
+        checkpoint_path_file = os.path.join(ckpt_path, f"{args.version}_{config.epochs}.pth")
         checkpoint = util.load_model(filename=checkpoint_path_file,
                                      model=model,
                                      optimizer=optimizer,
@@ -851,16 +972,23 @@ def main():
     elif args.attack_type in ['datacook', 'datacook_adv', 'Adv']:
 
         train(args, config, logger, model, optimizer, scheduler, criterion, trainer, evaluator, ENV, ckpt_path)
+        evaluator._reset_stats()
         evaluator.eval_model(0, model)
         payload = ('Eval Loss:%.4f\tEval acc: %.2f' % (evaluator.loss_meters.avg, evaluator.acc_meters.avg*100))
         logger.info(payload)
+        if args.attack_type in ['datacook', 'datacook_adv']:
+            save_pseudo_label_artifacts(model, data_loader, exp_path, device, logger)
+        if args.export_predictions_dir:
+            evaluator.save_predictions(os.path.join(args.export_predictions_dir, 'clean.npz'))
         noise,test_noise = sample_wise_perturbation(args, logger, num_classes, fingerprint_path, noise_generator, trainer, evaluator, model, criterion, optimizer, scheduler, random_noise,random_test_noise, device, ENV)
              
     elif args.attack_type == 'EM' or args.attack_type == 'EM-Pseudo':
+        if args.attack_type == 'EM-Pseudo':
+            save_pseudo_label_artifacts(model, data_loader, exp_path, device, logger)
         noise,test_noise = sample_wise_perturbation_min_min(args, logger, num_classes, fingerprint_path, noise_generator, trainer, evaluator, model, criterion, optimizer, scheduler, random_noise,random_test_noise, device, ENV)      
     
     else:
-        raise('Not implemented yet')
+        raise NotImplementedError(f'Attack type {args.attack_type!r} is not implemented')
     
     torch.save(noise, os.path.join(args.exp_name, 'perturbation.pt'))
     logger.info(noise)

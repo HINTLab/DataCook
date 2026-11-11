@@ -1,0 +1,35 @@
+# One-click main DataCook experiment: generation -> protected training -> NPZ -> metrics.
+dataset:
+  name: BloodMNIST
+  poison_name: PoisonBloodMNIST
+  modality: 2d_image
+  task_type: multiclass
+  num_classes: 8
+  config_path: configs/MedMNIST/BloodMNIST
+  data_path: ../datasets
+  noise_shape: [11959, 3, 28, 28]
+  test_noise_shape: [3421, 3, 28, 28]
+
+models:
+  surrogate: resnet18
+  victim: resnet18
+
+experiment:
+  attack_type: datacook
+  epsilon_scale: pixel
+  step_size_ratio: 0.2
+  num_steps: 20
+  universal_stop_error: 0.01
+
+seeds: [0, 1, 2]
+epsilons: [2, 4, 8, 12, 16]
+
+runtime:
+  # Change to python/path/in/your/environment when needed.
+  python: python
+  train_batch_size: 128
+  eval_batch_size: 128
+  num_workers: 8
+
+experiment_root: experiments/revision_pipeline
+result_root: results/revision_pipeline

@@ -1,0 +1,12 @@
+inputs:
+  cp_pp: ../../../../../results/revision_pipeline/summary/cp_pp_summary.csv
+  quality: ../../../../../results/revision_pipeline/posthoc/quality_metrics_seed3-7-all.csv
+  attacks: ../../../../../results/revision_pipeline/posthoc/adaptive_attack_results_all_seed3-7-all.csv
+  budget_attacks: ../../../../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_seed3-7-all.csv
+  runtime: ../../../../../results/revision_pipeline/posthoc/runtime_summary_seed3-7-all.csv
+  pseudo: ../../../../../results/revision_pipeline/posthoc/pseudo_label_quality_seed3-7-all.csv
+full_subset_sizes:
+  BloodMNIST: 1712
+  BreastMNIST: 78
+  RetinaMNIST: 120
+output_dir: results/revision_pipeline/final_seed3-7-all

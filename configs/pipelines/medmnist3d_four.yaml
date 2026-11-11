@@ -1,0 +1,6 @@
+# Four configured MedMNIST3D datasets with identical seeds and budgets.
+pipelines:
+  - organmnist3d.yaml
+  - nodulemnist3d.yaml
+  - fracturemnist3d.yaml
+  - synapsemnist3d.yaml

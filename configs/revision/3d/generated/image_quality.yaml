@@ -1,0 +1,470 @@
+experiments:
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: OrganMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/OrganMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: NoduleMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/NoduleMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: FractureMNIST3D
+    modality: 3d_volume
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/FractureMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 0
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=0-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 1
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=1-eps=32/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.06274509803921569
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=16/cooked_test.npz::images
+  compute_lpips: false
+- metadata:
+    dataset: SynapseMNIST3D
+    modality: 3d_volume
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_3d
+    victim_model: resnet18_3d
+    seed: 2
+    epsilon: 0.12549019607843137
+  images:
+    raw: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_3d/SynapseMNIST3D-datacook-sur=resnet18_3d-vic=resnet18_3d-seed=2-eps=32/cooked_test.npz::images
+  compute_lpips: false
+output: results/revision_pipeline_3d/posthoc/quality_metrics.csv

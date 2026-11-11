@@ -1,0 +1,5 @@
+# Run only the two datasets added after the BloodMNIST experiment.
+# Their metrics are still merged with existing per-run results in the shared summary.
+pipelines:
+  - breastmnist.yaml
+  - retinamnist.yaml

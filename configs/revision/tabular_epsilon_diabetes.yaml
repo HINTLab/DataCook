@@ -1,0 +1,38 @@
+dataset:
+  name: Diabetes
+  task_type: binary
+  num_classes: 2
+  # Relative to this YAML. Override with --data-path or TABULAR_DATA in the job.
+  data_path: ../../TableData/dataset/diabetes.csv
+  features:
+    - Pregnancies
+    - Glucose
+    - BloodPressure
+    - SkinThickness
+    - Insulin
+    - BMI
+    - DiabetesPedigreeFunction
+    - Age
+  target: Outcome
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+
+experiment:
+  # Epsilon uses standardized-feature L-inf units, not /255 pixel units.
+  seeds: [0, 1, 2]
+  epsilons: [0.1, 0.25, 0.5, 1.0, 2.0]
+  attackable_features: [BMI, DiabetesPedigreeFunction]
+  num_steps: 20
+  step_size_ratio: 0.25
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  class_balance: true
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular
+  result_root: results/revision_pipeline_tabular/datasets/diabetes

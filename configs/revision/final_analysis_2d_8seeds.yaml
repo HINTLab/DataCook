@@ -1,0 +1,25 @@
+inputs:
+  cp_pp: ../../results/revision_pipeline/summary/cp_pp_summary.csv
+  quality: ../../results/revision_pipeline/posthoc/quality_metrics_extended_2d_8seeds.csv
+  attacks: ../../results/revision_pipeline/posthoc/adaptive_attack_results_extended_2d_8seeds.csv
+  budget_attacks: ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_extended_2d_8seeds.csv
+  runtime: ../../results/revision_pipeline/posthoc/runtime_summary.csv
+  pseudo: ../../results/revision_pipeline/posthoc/pseudo_label_quality_extended_2d_8seeds.csv
+
+full_subset_sizes:
+  BloodMNIST: 1712
+  BreastMNIST: 78
+  RetinaMNIST: 120
+
+# Pre-registered primary tests. Other metrics remain available in the aggregate
+# and paper tables but are not added to the multiple-testing family.
+significance:
+  metrics: [acc, macro_f1, auc, macro_auc]
+  epsilons_pixel_by_dataset:
+    BloodMNIST: [8]
+    BreastMNIST: [8]
+    RetinaMNIST: [8, 12]
+  attack_types: [finetune, robust_finetune]
+  epochs: [10]
+
+output_dir: results/revision_pipeline/final_2d_8seeds

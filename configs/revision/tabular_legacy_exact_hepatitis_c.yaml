@@ -1,0 +1,51 @@
+dataset:
+  name: HepatitisC
+  task_type: multiclass
+  num_classes: 5
+  data_path: ../../TableData/dataset/HepatitisCdata.csv
+  features: [Age, Sex, ALB, ALP, ALT, AST, BIL, CHE, CHOL, CREA, GGT, PROT]
+  target: Category
+  categorical_mappings:
+    Sex: {m: 1, f: 2}
+  target_mapping:
+    "0=Blood Donor": 0
+    "0s=suspect Blood Donor": 1
+    "1=Hepatitis": 2
+    "2=Fibrosis": 3
+    "3=Cirrhosis": 4
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+  baseline_checkpoint: ../../TableData/TableData_oldversion/best_model_HepatitisCdata.pt
+  require_baseline_checkpoint: true
+
+experiment:
+  seeds: [42]
+  split_seed: 42
+  epsilons: [5.0]
+  attackable_features: [ALB, ALP, ALT, AST, BIL, CHE, CHOL, CREA, GGT, PROT]
+  num_steps: 300
+  step_size: 0.05
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  class_balance: false
+  stratify_split: false
+  preprocess_on_full_data: true
+  baseline_select_best_on_test: true
+  baseline_shuffle: true
+  baseline_global_data_order: true
+  protected_shuffle: false
+  protected_global_data_order: true
+  victim_seed: 42
+  victim_initialization_count: 2
+  victim_deepcopy_template: true
+  historical_loader_rng_draws_before_training: 2
+  protected_seed: 42
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular_legacy_exact
+  result_root: results/revision_pipeline_tabular_legacy_exact/datasets/hepatitis_c

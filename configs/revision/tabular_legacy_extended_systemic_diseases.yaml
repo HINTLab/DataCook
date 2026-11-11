@@ -1,0 +1,49 @@
+dataset:
+  name: SystemicDiseases
+  task_type: multilabel
+  data_path: "../../TableData/TableData_oldversion/systemic diseases.csv"
+  # The duplicate Smoking column is part of the historical 18-D input.
+  features: [Age, Gender, Ethnic, Cholesterol, HDL, Hyperlipidemia, BMI, DBP, SBP, Smoking, Hypertension, Diabetes, Smoking, ASCVD, MI, Stroke, dem, PD]
+  targets: [inciASCVD, inciMI, inciStroke, incidem, inciPD]
+  categorical_mappings:
+    Gender: {Male: 0, Female: 1}
+    Ethnic: {Non-Whites: 0, Whites: 1}
+    Hyperlipidemia: {"yes": 0, "no": 1}
+    Hypertension: {"yes": 0, "no": 1}
+    Diabetes: {"yes": 0, "no": 1}
+    Smoking: {"yes": 0, "no": 1}
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+  baseline_checkpoint: ../../TableData/TableData_oldversion/best_model.pt
+  require_baseline_checkpoint: true
+
+experiment:
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+  split_seed: 42
+  epsilons: [0.1, 0.25, 0.5, 1.0, 2.0, 5.0]
+  attackable_features: [Age, Cholesterol, HDL, Hyperlipidemia, BMI, DBP, SBP, ASCVD, MI, Stroke, dem, PD]
+  # Historical multi-label implementation: alpha=epsilon/4 and T=80.
+  num_steps: 80
+  step_size_ratio: 0.25
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  class_balance: false
+  stratify_split: false
+  preprocess_on_full_data: true
+  protected_shuffle: true
+  protected_global_data_order: true
+  victim_seed_offset: 0
+  protected_seed_offset: 0
+  victim_initialization_count: 2
+  victim_deepcopy_template: true
+  historical_loader_rng_draws_before_training: 2
+  reset_rng_each_epsilon: true
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular_legacy_extended
+  result_root: results/revision_pipeline_tabular_legacy_extended/datasets/systemic_diseases

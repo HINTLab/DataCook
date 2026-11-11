@@ -1,0 +1,64 @@
+dataset:
+  name: SystemicDiseases
+  task_type: multilabel
+  data_path: "../../TableData/dataset/systemic diseases.csv"
+  features:
+    - Age
+    - Gender
+    - Ethnic
+    - Cholesterol
+    - HDL
+    - Hyperlipidemia
+    - BMI
+    - DBP
+    - SBP
+    - Smoking
+    - Hypertension
+    - Diabetes
+    - ASCVD
+    - MI
+    - Stroke
+    - dem
+    - PD
+  targets: [inciASCVD, inciMI, inciStroke, incidem, inciPD]
+  categorical_mappings:
+    Gender:
+      "Male": 0
+      "Female": 1
+    Ethnic:
+      "Non-Whites": 0
+      "Whites": 1
+    Hyperlipidemia:
+      "yes": 1
+      "no": 0
+    Hypertension:
+      "yes": 1
+      "no": 0
+    Diabetes:
+      "yes": 1
+      "no": 0
+    Smoking:
+      "yes": 1
+      "no": 0
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+
+experiment:
+  seeds: [0, 1, 2]
+  epsilons: [0.1, 0.25, 0.5, 1.0, 2.0]
+  attackable_features: [Cholesterol, HDL, BMI, DBP, SBP]
+  num_steps: 20
+  step_size_ratio: 0.25
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 256
+  learning_rate: 0.001
+  class_balance: true
+  max_positive_weight: 100.0
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular
+  result_root: results/revision_pipeline_tabular/datasets/systemic_diseases

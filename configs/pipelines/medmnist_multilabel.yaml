@@ -1,0 +1,3 @@
+# Multi-label suite (currently ChestMNIST is MedMNIST's multi-label dataset).
+pipelines:
+  - chestmnist.yaml
