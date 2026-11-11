@@ -1,0 +1,3 @@
+# Initial 3D suite. Keep this at one run until the complete artifact contract passes.
+pipelines:
+  - organmnist3d_smoke.yaml

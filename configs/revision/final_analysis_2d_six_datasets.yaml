@@ -1,0 +1,29 @@
+inputs:
+  cp_pp: ../../results/revision_pipeline_6datasets/summary/cp_pp_summary.csv
+  quality: ../../results/revision_pipeline_6datasets/posthoc/quality_metrics.csv
+  attacks: ../../results/revision_pipeline_6datasets/posthoc/adaptive_attack_results.csv
+  budget_attacks: ../../results/revision_pipeline_6datasets/posthoc/adaptive_finetune_budget_results.csv
+  runtime: ../../results/revision_pipeline_6datasets/posthoc/runtime_summary.csv
+  pseudo: ../../results/revision_pipeline_6datasets/posthoc/pseudo_label_quality.csv
+
+full_subset_sizes:
+  BloodMNIST: 1712
+  BreastMNIST: 78
+  RetinaMNIST: 120
+  PneumoniaMNIST: 524
+  DermaMNIST: 1003
+  OrganCMNIST: 2392
+
+significance:
+  metrics: [acc, macro_f1, auc, macro_auc]
+  epsilons_pixel_by_dataset:
+    BloodMNIST: [8]
+    BreastMNIST: [8]
+    RetinaMNIST: [8, 12]
+    PneumoniaMNIST: [8]
+    DermaMNIST: [8]
+    OrganCMNIST: [8]
+  attack_types: [finetune, robust_finetune]
+  epochs: [10]
+
+output_dir: results/revision_pipeline_6datasets/final

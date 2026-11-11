@@ -1,0 +1,161 @@
+experiments:
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/ChestMNIST/resnet18.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id001
+    inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id002
+      inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::images
+      labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::labels
+    eval_data: *id001
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id002
+    eval_data: *id001
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id002
+    eval_data: *id001
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id002
+    eval_data: *id001
+    augmentation_strength: 2
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/ChestMNIST/resnet18.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id003
+    inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id004
+      inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::images
+      labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::labels
+    eval_data: *id003
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id004
+    eval_data: *id003
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id004
+    eval_data: *id003
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id004
+    eval_data: *id003
+    augmentation_strength: 2
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../MedMNIST/ChestMNIST/resnet18.yaml
+    checkpoint: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id005
+    inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id006
+      inputs: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::images
+      labels: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_val.npz::labels
+    eval_data: *id005
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id006
+    eval_data: *id005
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id006
+    eval_data: *id005
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id006
+    eval_data: *id005
+    augmentation_strength: 2
+output: results/revision_pipeline/posthoc/adaptive_finetune_budget_results_chestmnist.csv

@@ -1,0 +1,50 @@
+dataset:
+  name: HepatitisC
+  task_type: multiclass
+  num_classes: 5
+  data_path: ../../TableData/dataset/HepatitisCdata.csv
+  features:
+    - Age
+    - Sex
+    - ALB
+    - ALP
+    - ALT
+    - AST
+    - BIL
+    - CHE
+    - CHOL
+    - CREA
+    - GGT
+    - PROT
+  target: Category
+  categorical_mappings:
+    Sex:
+      "m": 0
+      "f": 1
+  target_mapping:
+    "0=Blood Donor": 0
+    "0s=suspect Blood Donor": 1
+    "1=Hepatitis": 2
+    "2=Fibrosis": 3
+    "3=Cirrhosis": 4
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+
+experiment:
+  seeds: [0, 1, 2]
+  epsilons: [0.1, 0.25, 0.5, 1.0, 2.0, 5.0]
+  attackable_features: [ALB, ALP, ALT, AST, BIL, CHE, CHOL, CREA, GGT, PROT]
+  num_steps: 300
+  step_size: 0.05
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  class_balance: false
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular_legacy_params
+  result_root: results/revision_pipeline_tabular_legacy_params/datasets/hepatitis_c

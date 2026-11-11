@@ -1,0 +1,23 @@
+groups:
+  adaptive_attacks:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/adaptive_attack_results_all.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_attack_results_all_seed3-7-eps8.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_attack_results_all_retina-eps12.csv
+    output: results/revision_pipeline/posthoc/adaptive_attack_results_extended_2d_8seeds.csv
+  finetune_budgets:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_seed3-7-eps8.csv
+      - ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results_retina-eps12.csv
+    output: results/revision_pipeline/posthoc/adaptive_finetune_budget_results_extended_2d_8seeds.csv
+  image_quality:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/quality_metrics.csv
+      - ../../results/revision_pipeline/posthoc/quality_metrics_seed3-7-all.csv
+    output: results/revision_pipeline/posthoc/quality_metrics_extended_2d_8seeds.csv
+  pseudo_quality:
+    inputs:
+      - ../../results/revision_pipeline/posthoc/pseudo_label_quality.csv
+      - ../../results/revision_pipeline/posthoc/pseudo_label_quality_seed3-7-all.csv
+    output: results/revision_pipeline/posthoc/pseudo_label_quality_extended_2d_8seeds.csv

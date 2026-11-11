@@ -1,0 +1,41 @@
+experiments:
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/cooked_test.npz::images
+  compute_lpips: true
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  images:
+    raw: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST/raw_test.npz::images
+    cooked: ../../../../artifacts/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/cooked_test.npz::images
+  compute_lpips: true
+output: results/revision_pipeline/posthoc/quality_metrics_chestmnist.csv

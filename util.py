@@ -87,6 +87,8 @@ def accuracy(output, target, topk=(1,)):
     return res
 
 def save_model(filename, epoch, model, optimizer, scheduler, save_best=False, **kwargs):
+    if not filename.endswith('.pth'):
+        filename += '.pth'
     # Torch Save State Dict
     state = {
         'epoch': epoch+1,
@@ -97,15 +99,20 @@ def save_model(filename, epoch, model, optimizer, scheduler, save_best=False, **
     for key, value in kwargs.items():
         state[key] = value
     torch.save(state, filename)
-    filename += '_best.pth'
+    filename = filename[:-4] + '_best.pth'
     if save_best:
         torch.save(state, filename)
     return
 
 def load_model(filename, model, optimizer, scheduler, **kwargs):
     # Load Torch State Dict
-    filename = filename + '.pth'
-    checkpoints = torch.load(filename, map_location=device)
+    if not filename.endswith('.pth'):
+        suffixed = filename + '.pth'
+        filename = suffixed if os.path.exists(suffixed) else filename
+    try:
+        checkpoints = torch.load(filename, map_location=device, weights_only=False)
+    except TypeError:
+        checkpoints = torch.load(filename, map_location=device)
     model.load_state_dict(checkpoints['model_state_dict'])
     if optimizer is not None and checkpoints['optimizer_state_dict'] is not None:
         optimizer.load_state_dict(checkpoints['optimizer_state_dict'])
@@ -140,4 +147,3 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
         self.max = max(self.max, val)
-

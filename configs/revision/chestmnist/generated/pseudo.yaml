@@ -1,0 +1,49 @@
+experiments:
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/resnet18/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/resnet18/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: ChestMNIST
+    modality: 2d_image
+    task_type: multilabel
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 14
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_multilabel/ChestMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/resnet18/pseudo_labels_train_dataset.npz
+outputs:
+  samples: results/revision_pipeline/posthoc/pseudo_label_samples_chestmnist.csv
+  quality: results/revision_pipeline/posthoc/pseudo_label_quality_chestmnist.csv

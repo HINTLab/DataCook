@@ -1,0 +1,5 @@
+# Three representative 2D datasets assigned to the second server.
+pipelines:
+  - pneumoniamnist.yaml
+  - dermamnist.yaml
+  - organcmnist.yaml

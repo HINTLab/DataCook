@@ -1,0 +1,45 @@
+groups:
+  main_metrics:
+    inputs:
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/diabetes/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/hepatitis_c/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-low/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-high/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-low/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-high/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-low/summary/main_metrics.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-high/summary/main_metrics.csv
+    output: results/revision_pipeline_tabular_legacy_params/summary/main_metrics.csv
+  cp_pp:
+    inputs:
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/diabetes/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/hepatitis_c/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-low/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-high/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-low/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-high/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-low/summary/cp_pp_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-high/summary/cp_pp_summary.csv
+    output: results/revision_pipeline_tabular_legacy_params/summary/cp_pp_summary.csv
+  epsilon:
+    inputs:
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/diabetes/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/hepatitis_c/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-low/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-high/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-low/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-high/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-low/epsilon_ablation.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-high/epsilon_ablation.csv
+    output: results/revision_pipeline_tabular_legacy_params/epsilon_ablation.csv
+  runtime:
+    inputs:
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/diabetes/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/hepatitis_c/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-low/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s0-high/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-low/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s1-high/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-low/runtime_summary.csv
+      - ../../results/revision_pipeline_tabular_legacy_params/shards/systemic-s2-high/runtime_summary.csv
+    output: results/revision_pipeline_tabular_legacy_params/runtime_summary.csv

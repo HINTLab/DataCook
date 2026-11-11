@@ -1,0 +1,50 @@
+# ChestMNIST multi-label DataCook pipeline.  The default is one validation run;
+# use --seeds/--epsilons overrides only after it completes successfully.
+dataset:
+  name: ChestMNIST
+  poison_name: PoisonChestMNIST
+  modality: 2d_image
+  task_type: multilabel
+  num_classes: 14
+  config_path: configs/MedMNIST/ChestMNIST
+  data_path: ../datasets
+  noise_shape: [78468, 3, 28, 28]
+  test_noise_shape: [22433, 3, 28, 28]
+  # CP/PP uses utility metrics whose larger values are better. Hamming loss and
+  # ECE are still exported in main_metrics.csv, but excluded from CP/PP signs.
+  metric_names:
+    - subset_acc
+    - micro_auc
+    - macro_auc
+    - micro_f1
+    - macro_f1
+    - micro_precision
+    - macro_precision
+    - micro_sensitivity
+    - macro_sensitivity
+    - micro_specificity
+    - macro_specificity
+
+models:
+  surrogate: resnet18
+  victim: resnet18
+
+experiment:
+  attack_type: datacook
+  epsilon_scale: pixel
+  step_size_ratio: 0.2
+  num_steps: 20
+  universal_stop_error: 0.01
+  threshold: 0.5
+
+seeds: [0]
+epsilons: [8]
+
+runtime:
+  python: python
+  train_batch_size: 128
+  eval_batch_size: 128
+  num_workers: 8
+
+experiment_root: experiments/revision_pipeline_multilabel
+result_root: results/revision_pipeline_multilabel

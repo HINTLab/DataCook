@@ -1,0 +1,9 @@
+# Master switchboard. Enable a task only after filling its task-specific config.
+tasks:
+  metrics: {enabled: false, config: revision/metrics.yaml}
+  attacks: {enabled: false, config: revision/attacks.yaml}
+  epsilon: {enabled: false, config: revision/epsilon.yaml}
+  pseudo: {enabled: false, config: revision/pseudo.yaml}
+  statistics: {enabled: false, config: revision/statistics.yaml}
+  runtime: {enabled: false, config: revision/runtime.yaml}
+  image_quality: {enabled: false, config: revision/image_quality.yaml}

@@ -1,166 +1,225 @@
 # DataCook
-## Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control
 
-An official implementation of the paper _DataCook_. 
+[![arXiv](https://img.shields.io/badge/arXiv-2403.17755-b31b1b.svg)](https://arxiv.org/abs/2403.17755)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
 
-**Accepted by Meta-Radiology, 2026!** The open-access version of the paper can be downloaded from [Arxiv](https://arxiv.org/abs/2403.17755). **Feel free to clone our full project, test, and even make improvements on your own.** 
+Official implementation of **DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control**, accepted by *Meta-Radiology* (2026).
 
-### Overview
-<p align="justify">
-DataCook explores deployment-stage healthcare data usage control using anti-adversarial fingerprints.
+Sihan Shang, Jun Yan, Danli Shi, Haizhong Zheng, Shuangjia Zheng, Wei Zhao, and Jiancheng Yang.
 
-The framework applies a private cooking procedure to healthcare data before distribution. Models trained on cooked data can preserve predictive utility when evaluated on similarly cooked inputs, while their performance on raw inputs may be reduced.
+> The journal DOI has not yet been assigned. The accepted paper and current metadata are available from [arXiv:2403.17755](https://arxiv.org/abs/2403.17755).
 
-We evaluate DataCook on 2D, 3D, and high-resolution medical images, as well as structured healthcare tabular data. The results demonstrate the feasibility of authorization-dependent model use in several settings, while highlighting important task- and metric-dependent limitations.
+## Overview
 
-DataCook is presented as a proof-of-concept framework rather than a universally effective mechanism for preventing unauthorized data use.
-</p>
+DataCook explores deployment-stage healthcare data usage control using anti-adversarial fingerprints. A private cooking procedure is applied before data distribution. Models trained on cooked data may preserve predictive utility on similarly cooked inputs while performing less effectively on raw inputs.
 
-![image](images/Overview.png)
+The method is a **task-dependent proof of concept**, not a universal mechanism for preventing unauthorized data use. Its behavior depends on the dataset, modality, task, metric, model, and perturbation budget.
 
+![DataCook overview](images/Overview.png)
 
+## Included experiments
 
----
+| Component | Included scope |
+| --- | --- |
+| MedMNIST 2D | BloodMNIST, BreastMNIST, RetinaMNIST, PneumoniaMNIST, DermaMNIST, and OrganCMNIST |
+| Multi-label imaging | ChestMNIST |
+| MedMNIST3D | FractureMNIST3D, NoduleMNIST3D, OrganMNIST3D, and SynapseMNIST3D |
+| MedMNIST+ 224x224 | BreastMNIST, PneumoniaMNIST, and RetinaMNIST |
+| Structured medical data | Pima Diabetes, Hepatitis C, and Systemic Diseases |
+| Evaluation | Accuracy, task-aware AUC, CP, PP, calibration, image quality, runtime, pseudo-label analysis, and paired exploratory statistics |
+| Adaptive attacks | JPEG, smoothing, median filtering, augmentation, and limited-data fine-tuning |
 
-## Table of Contents
+The unified configurations in `configs/pipelines/` reproduce DataCook experiments. `attack_type: datacook_adv` selects the adversarial variant. Historical per-dataset launchers remain under `scripts/` for traceability during migration and are not used by the unified quick start below.
 
-- [Environment Setup](#environment-setup)
-- [Dataset Preparation](#dataset-preparation)
-- [How to Run Our Codes)](#how-to-run-our-codes)
-- [Transfer Testing](#transfer-testing)
-- [High-Resolution & 3D](#high-resolution--3d)
-- [Baselines](#baselines)
-- [Command-Line Arguments](#command-line-arguments)
-- [Citation](#citation)
-- [License](#license)
-- [Contact](#contact)
+## Installation
 
----
+The experiments were developed with Python 3.8 and PyTorch 2.0. A CUDA-capable GPU is recommended for training and attack evaluation.
 
-## Environment Setup
 ```bash
-# Create conda environment
 conda create -n datacook python=3.8 -y
 conda activate datacook
-
-# Install required dependencies
 pip install -r requirements.txt
 ```
 
----
-## Dataset Preparation 
-### 1. MedMNIST Datasets
-We primarily use datasets from [MedMNIST](https://medmnist.com/ "https://medmnist.com/").
-Please download them via the official Python API or manually place them under:
-```bash
-./data/MedMNIST/
-```
-Example:
-```python
-from medmnist import BloodMNIST
-from torchvision import transforms
-
-transform = transforms.Compose([transforms.ToTensor()])
-train_dataset = BloodMNIST(split='train', transform=transform, download=True, root='./data/MedMNIST')
-test_dataset = BloodMNIST(split='test', transform=transform, download=True, root='./data/MedMNIST')
-```
----
-
-### 2. Table Data
-We also support **tabular datasets**. Please place them under:
+LPIPS is optional and is only required for 2D perceptual image-quality evaluation:
 
 ```bash
-./data/TableData/
+pip install lpips
 ```
-| Dataset Name  | Download Link                       |
-| ------------- | ----------------------------------- |
-| Pima Indians Diabetes dataset  | [Using the ADAP Learning Algorithm to Forecast the Onset of Diabetes Mellitus](https://pmc.ncbi.nlm.nih.gov/articles/PMC2245318/) |
-| Hepatitis C Prediction dataset | [UCI Machine Learning Repository](https://archive.ics.uci.edu/datasets) |
-| Systemic Diseases dataset      | [UK biobank](https://pubmed.ncbi.nlm.nih.gov/25826379/) |
 
----
+## Data preparation
 
-## How to Run Our Codes
-**Example: Run DataCook on BloodMNIST (2D)**
+### MedMNIST
+
+Install `medmnist` through `requirements.txt`. The pipeline downloads an official split when it is absent from the configured root. Set `dataset.data_path` in each pipeline YAML to the desired MedMNIST directory. The bundled configurations default to:
+
+```text
+../datasets/
+```
+
+For example, edit `configs/pipelines/bloodmnist.yaml` when using a different location. Both 28x28/28x28x28 and 224x224 variants are obtained through the official [MedMNIST API](https://medmnist.com/).
+
+### Structured medical data
+
+The datasets are not redistributed. After obtaining them from their respective providers, use the following filenames or override `--data-path`:
+
+```text
+TableData/dataset/diabetes.csv
+TableData/dataset/HepatitisCdata.csv
+TableData/dataset/systemic diseases.csv
+```
+
+The Systemic Diseases experiment uses restricted-access cohort data; users are responsible for obtaining the required authorization and complying with the provider's terms.
+
+## Quick start
+
+Inspect the commands for the primary 2D suite without running training:
+
 ```bash
-# Step 1: Search perturbation noise
-cd scripts/Datacook/2d/BloodMNIST
-./search_perturbation_noise.sh
-
-# Step 2: Train model with generated perturbations
-cd scripts/Datacook/2d/BloodMNIST
-./train.sh
+python run_datacook_suite.py \
+  --config configs/pipelines/medmnist_three.yaml \
+  --dry-run
 ```
-You can follow the same format to add other datasets.
 
----
-**Example: Run tabular datasets - systemic diseases.csv.**
+Run the suite on one visible GPU:
+
 ```bash
-# Step 1: pretrain model
-cd TableData
-python MLP.py
-
-# Step 2: Generated perturbations and get result such as using datcook
-python PrivacyAttacker.py --attack_type datacook
+CUDA_VISIBLE_DEVICES=0 python run_datacook_suite.py \
+  --config configs/pipelines/medmnist_three.yaml
 ```
 
-## Transfer Testing
-To test transferability on another model (e.g., from ResNet-18 to ResNet-50),
-modify the `model_name` argument in `train.sh`:
+The pipeline is resumable. Existing complete artifacts are reused. A single dataset, seed, and perturbation budget can be selected for a smoke test:
+
 ```bash
-model_name=resnet50
+CUDA_VISIBLE_DEVICES=0 python run_datacook_pipeline.py \
+  --config configs/pipelines/bloodmnist.yaml \
+  --seeds 0 --epsilons 8
 ```
 
----
+Additional suites:
 
-## High-Resolution & 3D
-For high-resolution and 3D datasets, see:
 ```bash
-scripts/Datacook/high-resolution/
-scripts/Datacook/3d/
+# Additional 2D datasets
+python run_datacook_suite.py --config configs/pipelines/medmnist_extra_three.yaml
+
+# Multi-label ChestMNIST
+python run_datacook_pipeline.py --config configs/pipelines/chestmnist.yaml
+
+# Four volumetric datasets
+python run_datacook_suite.py --config configs/pipelines/medmnist3d_four.yaml
+
+# Three 224x224 datasets
+python run_datacook_suite.py --config configs/pipelines/medmnist_224_three.yaml
 ```
----
 
-## Baselines
+## Structured-data experiments
 
-We provide the following baselines in `scripts/`:
+The final tabular protocol uses Adam, batch size 32, `epsilon=5`, absolute step size `0.05`, and 300 cooking steps at the representative budget. The same scripts also support the configured perturbation-budget grid.
 
-* Error-Minimum - [**EM**](https://arxiv.org/abs/2101.04898 "Unlearnable Examples: Making Personal Data Unexploitable") And modified verison of **EM** in our paper, called **EM-Pseudo**
-* Adversarial Poison - [**ADV**](https://arxiv.org/abs/2106.10807 "Adversarial Examples Make Strong Poisons")
-* Unlearnable Clusters - [**UC**](https://arxiv.org/abs/2301.01217 "Unlearnable Clusters: Towards Label-agnostic Unlearnable Examples")
-* Synthetic Perturbations - [**LSP**](https://arxiv.org/abs/2111.00898 "https://arxiv.org/abs/2111.00898")
+```bash
+python run_tabular_epsilon_ablation.py \
+  --config configs/revision/tabular_legacy_params_diabetes.yaml \
+  --device cuda
 
----
+python run_tabular_epsilon_ablation.py \
+  --config configs/revision/tabular_legacy_params_hepatitis_c.yaml \
+  --device cuda
 
-## Command-Line Arguments
-All major hyperparameters can be set via command-line arguments in the provided `.sh` scripts.
-Please refer to each `train.sh` or `search_perturbation_noise.sh` file for details.
+python run_tabular_epsilon_ablation.py \
+  --config configs/revision/tabular_legacy_params_systemic_diseases.yaml \
+  --device cuda
+```
 
----
+Use `--data-path /path/to/file.csv` to override the dataset location.
+
+## Evaluation and post-hoc experiments
+
+Each completed imaging run exports three prediction artifacts:
+
+```text
+clean.npz                    # clean model evaluated on raw test data
+authorized_cooked.npz        # protected model evaluated on cooked test data
+unauthorized_raw.npz         # protected model evaluated on raw test data
+```
+
+Generate post-hoc configurations from completed runs and execute the enabled analyses:
+
+```bash
+python prepare_revision_posthoc.py \
+  --suite-config configs/pipelines/medmnist_three.yaml \
+  --strict
+
+python run_revision_experiments.py \
+  --config configs/revision/generated.yaml \
+  --device cuda
+```
+
+CP and PP are signed changes relative to the clean reference:
+
+```text
+CP = unauthorized_raw - clean
+PP = authorized_cooked - clean
+```
+
+More negative CP indicates stronger unauthorized degradation. PP closer to zero indicates better preservation of authorized utility. Binary tasks use AUC; multiclass and multi-label tasks use macro-AUC when task-aware AUC results are reported.
+
+Detailed commands, artifact contracts, and experiment notes are provided in [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
+
+## Repository structure
+
+```text
+configs/pipelines/       End-to-end dataset and budget configurations
+configs/revision/        Evaluation, attack, ablation, and analysis configurations
+metrics/                 Classification, CP/PP, and image-quality metrics
+attacks/                 Adaptive attack implementations
+analysis/                Aggregation and exploratory statistical analysis
+revision_experiments/    Shared configuration, I/O, and model utilities
+jobs/                    Optional multi-stage job wrappers
+tests/                   Regression and smoke tests
+```
+
+Generated data, checkpoints, predictions, and results are intentionally excluded from version control.
+
+## Testing
+
+```bash
+pip install -r requirements-dev.txt
+python -m compileall -q .
+pytest -q
+```
+
+GPU training is not performed by the unit tests.
 
 ## Citation
-If you use this code, please cite the following:
 
+```bibtex
 @misc{shang2026datacook,
-  title = {DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control},
-  author = {Shang, Sihan and Yan, Jun and Shi, Danli and Zheng, Haizhong and Zheng, Shuangjia and Zhao, Wei and Yang, Jiancheng},
-  year = {2026},
-  eprint = {2403.17755},
+  title         = {DataCook: Exploring Anti-Adversarial Fingerprints for Healthcare Data Usage Control},
+  author        = {Shang, Sihan and Yan, Jun and Shi, Danli and Zheng, Haizhong and Zheng, Shuangjia and Zhao, Wei and Yang, Jiancheng},
+  year          = {2026},
+  eprint        = {2403.17755},
   archivePrefix = {arXiv},
-  primaryClass = {cs.AI},
-  url = {https://arxiv.org/abs/2403.17755},
-  note = {Accepted for publication in Meta-Radiology}
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2403.17755},
+  note          = {Accepted for publication in Meta-Radiology}
 }
+```
 
-> We adapted some codes from:
-> * [Unlearnable Examples](https://github.com/HanxunH/Unlearnable-Examples)
-> * [Unlearnable Clusters](https://github.com/jiamingzhang94/Unlearnable-Clusters)
+The citation will be updated when the journal DOI and final bibliographic record become available.
+
+## Acknowledgements
+
+Parts of the implementation were adapted from:
+
+- [Unlearnable Examples](https://github.com/HanxunH/Unlearnable-Examples)
+- [Unlearnable Clusters](https://github.com/jiamingzhang94/Unlearnable-Clusters)
+
+Please also cite the original MedMNIST datasets and the baseline methods used in an experiment.
 
 ## License
-This project is licensed under the MIT License.
+
+This repository is released under the [Apache License 2.0](LICENSE). Dataset access and redistribution remain subject to the licenses and terms of the original data providers.
 
 ## Contact
-For any questions or collaborations, please contact:
-**Max Shang** – [loveligo97@gmail.com](loveligo97@gmail.com)
 
-
+For questions about the code, contact Sihan Shang at [loveligo97@gmail.com](mailto:loveligo97@gmail.com).

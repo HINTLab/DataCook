@@ -1,3 +1,14 @@
-torch
-torchvision
+torch==2.0.0
+torchvision==0.15.1
 mlconfig
+numpy
+pandas
+scikit-learn
+scipy
+scikit-image
+Pillow
+PyYAML
+medmnist
+tqdm
+timm==0.6.13
+# Optional (Task 8 LPIPS): pip install lpips

@@ -1,0 +1,139 @@
+experiments:
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: BreastMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/BreastMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: PneumoniaMNIST
+    modality: high_resolution
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/PneumoniaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=0-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=1-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+- metadata:
+    dataset: RetinaMNIST
+    modality: high_resolution
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18_224
+    victim_model: resnet18_224
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/predictions/unauthorized_raw.npz
+  pseudo_labels: ../../../../experiments/revision_pipeline_224/RetinaMNIST-datacook-sur=resnet18_224-vic=resnet18_224-seed=2-eps=8/resnet18_224/pseudo_labels_train_dataset.npz
+outputs:
+  samples: results/revision_pipeline/posthoc/pseudo_label_samples_224.csv
+  quality: results/revision_pipeline/posthoc/pseudo_label_quality_224.csv

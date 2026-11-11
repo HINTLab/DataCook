@@ -1,0 +1,9 @@
+inputs:
+  cp_pp: ../../../../results/revision_pipeline_3d/summary/cp_pp_summary.csv
+  quality: ../../../../results/revision_pipeline_3d/posthoc/quality_metrics.csv
+  attacks: ../../../../results/revision_pipeline_3d/posthoc/adaptive_attack_results_all.csv
+  budget_attacks: ../../../../results/revision_pipeline_3d/posthoc/adaptive_finetune_budget_results.csv
+  runtime: ../../../../results/revision_pipeline_3d/posthoc/runtime_summary.csv
+  pseudo: ../../../../results/revision_pipeline_3d/posthoc/pseudo_label_quality.csv
+full_subset_sizes: {}
+output_dir: results/revision_pipeline_3d/final

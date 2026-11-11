@@ -1,0 +1,52 @@
+dataset:
+  name: SystemicDiseases
+  task_type: multilabel
+  data_path: "../../TableData/TableData_oldversion/systemic diseases.csv"
+  # Keep the duplicated Smoking column because it exists in the original code.
+  features: [Age, Gender, Ethnic, Cholesterol, HDL, Hyperlipidemia, BMI, DBP, SBP, Smoking, Hypertension, Diabetes, Smoking, ASCVD, MI, Stroke, dem, PD]
+  targets: [inciASCVD, inciMI, inciStroke, incidem, inciPD]
+  categorical_mappings:
+    Gender: {Male: 0, Female: 1}
+    Ethnic: {Non-Whites: 0, Whites: 1}
+    Hyperlipidemia: {"yes": 0, "no": 1}
+    Hypertension: {"yes": 0, "no": 1}
+    Diabetes: {"yes": 0, "no": 1}
+    Smoking: {"yes": 0, "no": 1}
+  test_size: 0.2
+
+model:
+  hidden_dims: [64, 32]
+  dropout: 0.3
+  baseline_checkpoint: ../../TableData/TableData_oldversion/best_model.pt
+  require_baseline_checkpoint: true
+
+experiment:
+  seeds: [42]
+  split_seed: 42
+  epsilons: [5.0]
+  # Exact feature mask from TableData/PrivacyAttacker.py.
+  attackable_features: [Age, Cholesterol, HDL, Hyperlipidemia, BMI, DBP, SBP, ASCVD, MI, Stroke, dem, PD]
+  # The old source ignores alpha=0.05 and executes alpha=epsilon/4.
+  num_steps: 80
+  step_size_ratio: 0.25
+  baseline_epochs: 100
+  protected_epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  class_balance: false
+  stratify_split: false
+  preprocess_on_full_data: true
+  baseline_select_best_on_test: true
+  baseline_shuffle: true
+  baseline_global_data_order: true
+  protected_shuffle: true
+  protected_global_data_order: true
+  victim_seed: 42
+  victim_initialization_count: 2
+  victim_deepcopy_template: true
+  historical_loader_rng_draws_before_training: 2
+  protected_seed: 42
+
+outputs:
+  artifact_root: artifacts/revision_pipeline_tabular_legacy_exact
+  result_root: results/revision_pipeline_tabular_legacy_exact/datasets/systemic_diseases

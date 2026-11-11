@@ -1,0 +1,12 @@
+exports: []
+# - metadata: {dataset: BloodMNIST, modality: 2d_image, task_type: multiclass,
+#              method: datacook, surrogate_model: resnet18, victim_model: resnet18,
+#              seed: 0, epsilon: 0.031372549}
+#   model:
+#     config_path: ../MedMNIST/BloodMNIST/resnet18.yaml
+#     checkpoint: ../../checkpoints/resnet18_100.pth
+#   data:
+#     inputs: ../../artifacts/test.npz::images
+#     labels: ../../artifacts/test.npz::labels
+#   output: ../../artifacts/predictions/clean.npz
+#   batch_size: 128

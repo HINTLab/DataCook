@@ -1,0 +1,24 @@
+inputs:
+  cp_pp: ../../results/revision_pipeline/summary/cp_pp_summary.csv
+  quality: ../../results/revision_pipeline/posthoc/quality_metrics.csv
+  attacks: ../../results/revision_pipeline/posthoc/adaptive_attack_results_all.csv
+  # Optional on the first analysis pass; created by the budget-attack job.
+  budget_attacks: ../../results/revision_pipeline/posthoc/adaptive_finetune_budget_results.csv
+  runtime: ../../results/revision_pipeline/posthoc/runtime_summary.csv
+  pseudo: ../../results/revision_pipeline/posthoc/pseudo_label_quality.csv
+
+full_subset_sizes:
+  BloodMNIST: 1712
+  BreastMNIST: 78
+  RetinaMNIST: 120
+
+significance:
+  metrics: [acc, macro_f1, auc, macro_auc]
+  epsilons_pixel_by_dataset:
+    BloodMNIST: [8]
+    BreastMNIST: [8]
+    RetinaMNIST: [8]
+  attack_types: [finetune, robust_finetune]
+  epochs: [10]
+
+output_dir: results/revision_pipeline/final

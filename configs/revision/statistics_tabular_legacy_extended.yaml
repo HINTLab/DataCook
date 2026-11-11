@@ -1,0 +1,20 @@
+inputs:
+  - path: ../../results/revision_pipeline_tabular_legacy_extended/epsilon_ablation.csv
+    experiment_type: historical_protocol_budget_ablation
+    value_columns:
+      - clean
+      - authorized_cooked
+      - unauthorized_raw
+      - cp
+      - pp
+      - residual_utility
+
+aggregated_output: results/revision_pipeline_tabular_legacy_extended/aggregated_results.csv
+significance_input: ../../results/revision_pipeline_tabular_legacy_extended/epsilon_ablation.csv
+significance_output: results/revision_pipeline_tabular_legacy_extended/significance_tests.csv
+primary_metrics_by_task:
+  binary: acc
+  multiclass: acc
+  multilabel: subset_acc
+# Correct the six budget-wise tests separately for each dataset/comparison.
+holm_family: [dataset, comparison]

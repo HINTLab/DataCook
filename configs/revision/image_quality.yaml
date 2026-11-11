@@ -1,0 +1,7 @@
+experiments: []
+# - metadata: {dataset: BloodMNIST, modality: 2d_image, task_type: multiclass,
+#              method: datacook, surrogate_model: resnet18, victim_model: resnet18,
+#              seed: 0, epsilon: 0.031372549, setting: image_quality}
+#   images: {raw: ../../artifacts/images.npz::raw, cooked: ../../artifacts/images.npz::cooked}
+#   compute_lpips: true
+output: results/image_quality/quality_metrics.csv

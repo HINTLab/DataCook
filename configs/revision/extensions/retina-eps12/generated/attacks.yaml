@@ -1,0 +1,394 @@
+experiments:
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 3
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=3-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=3-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=3-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=3-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 4
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=4-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=4-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=4-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=4-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 5
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=5-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=5-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=5-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=5-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 6
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=6-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=6-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=6-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=6-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 7
+    epsilon: 0.047058823529411764
+  num_classes: 5
+  predictions:
+    clean: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=7-eps=12/predictions/clean.npz
+    authorized_cooked: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=7-eps=12/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=7-eps=12/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=7-eps=12/protected/resnet18/checkpoints/resnet18.pth
+  eval_data:
+    inputs: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: jpeg
+    strength: 95
+  - type: jpeg
+    strength: 75
+  - type: jpeg
+    strength: 50
+  - type: gaussian_smoothing
+    strength:
+      sigma: 0.5
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 1.0
+      kernel_size: 5
+  - type: gaussian_smoothing
+    strength:
+      sigma: 2.0
+      kernel_size: 5
+  - type: strong_augmentation
+    strength: 1
+  - type: strong_augmentation
+    strength: 2
+  - type: strong_augmentation
+    strength: 3
+  - type: median_filter
+    strength: 3
+  - type: median_filter
+    strength: 5
+output: results/revision_pipeline/posthoc/adaptive_attack_results_retina-eps12.csv

@@ -1,0 +1,31 @@
+tasks:
+  metrics:
+    enabled: false
+    config: metrics.yaml
+  attacks:
+    enabled: false
+    config: generated/attacks.yaml
+  finetune_attacks:
+    enabled: false
+    config: generated/attacks_finetune.yaml
+  finetune_budget_attacks:
+    enabled: false
+    config: generated/attacks_finetune_budget.yaml
+  epsilon:
+    enabled: false
+    config: epsilon.yaml
+  pseudo:
+    enabled: false
+    config: generated/pseudo.yaml
+  statistics:
+    enabled: false
+    config: statistics.yaml
+  runtime:
+    enabled: false
+    config: generated/runtime.yaml
+  image_quality:
+    enabled: true
+    config: generated/image_quality.yaml
+  final_analysis:
+    enabled: false
+    config: generated/final_analysis.yaml

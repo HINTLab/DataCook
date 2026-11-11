@@ -1,0 +1,21 @@
+seeds: [0, 1, 2]
+metadata_defaults:
+  dataset: BloodMNIST
+  modality: 2d_image
+  task_type: multiclass
+  method: datacook
+  surrogate_model: resnet18
+  victim_model: resnet18
+  epsilon: 0.03137254901960784
+# Paths can use {seed}, {epsilon}, and {epsilon_pixel} templates.
+experiments: []
+# Example record:
+# - num_classes: 8
+#   metric_names: [acc, macro_auc, macro_f1, macro_sensitivity, macro_specificity]
+#   predictions:
+#     clean: ../../artifacts/seed_{seed}/clean.npz
+#     authorized_cooked: ../../artifacts/seed_{seed}/authorized_cooked.npz
+#     unauthorized_raw: ../../artifacts/seed_{seed}/unauthorized_raw.npz
+outputs:
+  main_metrics: results/metrics/main_metrics.csv
+  cp_pp: results/metrics/cp_pp_summary.csv

@@ -1,0 +1,7 @@
+inputs: []
+# - {path: ../../results/metrics/cp_pp_summary.csv,
+#    experiment_type: main, value_columns: [cp, pp]}
+comparisons: []
+# - {method_a: datacook, method_b: EM-Pseudo, metrics: [cp:acc, pp:acc], test: auto}
+aggregated_output: results/statistics/aggregated_results.csv
+significance_output: results/statistics/significance_tests.csv

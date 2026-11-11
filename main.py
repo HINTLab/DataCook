@@ -3,6 +3,7 @@ import datetime
 import os
 import shutil
 import time
+import random
 import numpy as np
 import dataset
 import mlconfig
@@ -23,6 +24,12 @@ parser.add_argument('--load_model', action='store_true', default=False)
 parser.add_argument('--data_parallel', action='store_true', default=False)
 parser.add_argument('--train', action='store_true', default=False)
 parser.add_argument('--save_frequency', default=-1, type=int)
+parser.add_argument('--deterministic', action='store_true', default=False,
+                    help='Use deterministic PyTorch algorithms for reproducible multi-seed runs')
+parser.add_argument('--export_predictions_dir', type=str, default='',
+                    help='Directory for standardized revision prediction NPZ files')
+parser.add_argument('--evaluation_role', choices=['clean', 'protected'], default='protected',
+                    help='Export clean or authorized/unauthorized prediction names')
 # Datasets Options
 parser.add_argument('--train_face', action='store_true', default=False)
 parser.add_argument('--train_portion', default=1.0, type=float)
@@ -35,6 +42,8 @@ parser.add_argument('--recover_test_data_type', type=str, default='CIFAR10')
 parser.add_argument('--train_data_path', type=str, default='../datasets')
 parser.add_argument('--test_data_path', type=str, default='../datasets')
 parser.add_argument('--recover_test_data_path', type=str, default='../datasets')
+parser.add_argument('--high_resolution', action='store_true', default=False,
+                    help='Load the official 224x224 MedMNIST+ split')
 args = parser.parse_args()
 
 # Set up Experiments
@@ -51,11 +60,19 @@ logger = util.setup_logger(name=args.version, log_file=log_file_path + ".log")
 
 # CUDA Options
 logger.info("PyTorch Version: %s" % (torch.__version__))
+random.seed(args.seed)
+np.random.seed(args.seed)
+torch.manual_seed(args.seed)
+if args.deterministic and hasattr(torch, 'use_deterministic_algorithms'):
+    try:
+        torch.use_deterministic_algorithms(True, warn_only=True)
+    except TypeError:
+        torch.use_deterministic_algorithms(True)
 if torch.cuda.is_available():
-    torch.manual_seed(args.seed)
-    torch.cuda.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
     torch.backends.cudnn.enabled = True
-    torch.backends.cudnn.benchmark = True
+    torch.backends.cudnn.benchmark = not args.deterministic
+    torch.backends.cudnn.deterministic = args.deterministic
     device = torch.device('cuda')
     device_list = [torch.cuda.get_device_name(i) for i in range(0, torch.cuda.device_count())]
     logger.info("GPU List: %s" % (device_list))
@@ -138,7 +155,8 @@ def main():
                                         train_batch_size=args.train_batch_size,
                                         eval_batch_size=args.eval_batch_size,
                                         num_of_workers=args.num_of_workers,
-                                        seed=args.seed,high_resolution=False)
+                                        seed=args.seed,
+                                        high_resolution=args.high_resolution)
                                         
     logger.info('Training Dataset: %s' % str(datasets_generator.datasets['train_dataset']))
     logger.info('Test Dataset: %s' % str(datasets_generator.datasets['test_dataset']))
@@ -184,6 +202,18 @@ def main():
 
     if args.train:
         train(starting_epoch, model, optimizer, scheduler, criterion, trainer, evaluator, ENV, data_loader)
+
+    if args.export_predictions_dir:
+        logger.info('Running final prediction export for role=%s', args.evaluation_role)
+        evaluator._reset_stats()
+        evaluator.eval(0, model)
+        if args.evaluation_role == 'clean':
+            evaluator.save_predictions(os.path.join(args.export_predictions_dir, 'clean.npz'))
+        else:
+            evaluator.save_predictions(os.path.join(args.export_predictions_dir, 'unauthorized_raw.npz'))
+            evaluator.save_predictions(
+                os.path.join(args.export_predictions_dir, 'authorized_cooked.npz'),
+                recover=True)
 
 
 if __name__ == '__main__':

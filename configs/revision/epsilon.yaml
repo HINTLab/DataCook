@@ -1,0 +1,9 @@
+metadata_defaults:
+  method: datacook
+seeds: [0, 1, 2]
+experiments: []
+# A record may set epsilons: [0.0078431373, 0.0156862745, 0.0313725490,
+#                            0.0470588235, 0.0627450980] and use {epsilon}
+# in artifact paths. For legacy perturbation.py commands, pass the corresponding
+# 2/4/8/12/16 with --epsilon_scale pixel; or pass these values with unit.
+output: results/ablations/epsilon_ablation.csv

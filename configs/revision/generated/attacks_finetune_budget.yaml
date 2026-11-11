@@ -1,0 +1,479 @@
+experiments:
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 8
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BloodMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id001
+    inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id002
+      inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::labels
+    eval_data: *id001
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id002
+    eval_data: *id001
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id002
+    eval_data: *id001
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id002
+    eval_data: *id001
+    augmentation_strength: 2
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 8
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BloodMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id003
+    inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id004
+      inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::labels
+    eval_data: *id003
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id004
+    eval_data: *id003
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id004
+    eval_data: *id003
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id004
+    eval_data: *id003
+    augmentation_strength: 2
+- metadata:
+    dataset: BloodMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 8
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BloodMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BloodMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id005
+    inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id006
+      inputs: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BloodMNIST/raw_val.npz::labels
+    eval_data: *id005
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id006
+    eval_data: *id005
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id006
+    eval_data: *id005
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id006
+    eval_data: *id005
+    augmentation_strength: 2
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BreastMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id007
+    inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id008
+      inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::labels
+    eval_data: *id007
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id008
+    eval_data: *id007
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id008
+    eval_data: *id007
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id008
+    eval_data: *id007
+    augmentation_strength: 2
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BreastMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id009
+    inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id010
+      inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::labels
+    eval_data: *id009
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id010
+    eval_data: *id009
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id010
+    eval_data: *id009
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id010
+    eval_data: *id009
+    augmentation_strength: 2
+- metadata:
+    dataset: BreastMNIST
+    modality: 2d_image
+    task_type: binary
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 2
+  predictions:
+    clean: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/BreastMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/BreastMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id011
+    inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id012
+      inputs: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/BreastMNIST/raw_val.npz::labels
+    eval_data: *id011
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id012
+    eval_data: *id011
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id012
+    eval_data: *id011
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id012
+    eval_data: *id011
+    augmentation_strength: 2
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 0
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=0-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id013
+    inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id014
+      inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::labels
+    eval_data: *id013
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id014
+    eval_data: *id013
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id014
+    eval_data: *id013
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id014
+    eval_data: *id013
+    augmentation_strength: 2
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 1
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=1-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id015
+    inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id016
+      inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::labels
+    eval_data: *id015
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id016
+    eval_data: *id015
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id016
+    eval_data: *id015
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id016
+    eval_data: *id015
+    augmentation_strength: 2
+- metadata:
+    dataset: RetinaMNIST
+    modality: 2d_image
+    task_type: multiclass
+    method: datacook
+    surrogate_model: resnet18
+    victim_model: resnet18
+    seed: 2
+    epsilon: 0.03137254901960784
+  num_classes: 5
+  predictions:
+    clean: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/clean.npz
+    authorized_cooked: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/authorized_cooked.npz
+    unauthorized_raw: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/predictions/unauthorized_raw.npz
+  model:
+    config_path: ../../MedMNIST/RetinaMNIST/resnet18.yaml
+    checkpoint: ../../../experiments/revision_pipeline/RetinaMNIST-datacook-sur=resnet18-vic=resnet18-seed=2-eps=8/protected/resnet18/checkpoints/resnet18.pth
+  eval_data: &id017
+    inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::images
+    labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_test.npz::labels
+  attacks:
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: &id018
+      inputs: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::images
+      labels: ../../../artifacts/revision_pipeline/RetinaMNIST/raw_val.npz::labels
+    eval_data: *id017
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 25
+    raw_subset: *id018
+    eval_data: *id017
+    augmentation_strength: 2
+  - type: finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id018
+    eval_data: *id017
+  - type: robust_finetune
+    epochs: 10
+    learning_rate: 0.0001
+    batch_size: 64
+    subset_size: 50
+    raw_subset: *id018
+    eval_data: *id017
+    augmentation_strength: 2
+output: results/revision_pipeline/posthoc/adaptive_finetune_budget_results.csv
